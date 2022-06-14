@@ -692,7 +692,7 @@ SpriteRenderer:
   m_Size: {x: 40.96, y: 40.96}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &355671327
@@ -1264,7 +1264,7 @@ Transform:
   m_Children:
   - {fileID: 1747296853}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &902123712
 GameObject:
@@ -2826,7 +2826,7 @@ SpriteRenderer:
   m_Size: {x: 19.2, y: 10.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &1747296853
@@ -3163,6 +3163,7 @@ MonoBehaviour:
   _speed: 12
   _speedMultiplier: 2
   _laserPrefab: {fileID: 3562113920074601443, guid: 792fd45e656764b4980d9aabcfc04fc9, type: 3}
+  _playerHomingLaserPrefab: {fileID: 6265573354245694596, guid: 5a9a6ff62d1e2d244bb4be5a2c263e25, type: 3}
   _tripleshotPrefab: {fileID: 3015907494461541979, guid: b1cfe63fbfeb8cc40b71e90fd4a93092, type: 3}
   _boosterShotPrefab: {fileID: 8700673304710436447, guid: b2dc5caececd11641bf85662fafe4bb0, type: 3}
   _flankCannonPrefab: {fileID: 9149305475588930520, guid: 6706df3bcdf9af04d8d7ff7fe8c79622, type: 3}
@@ -3172,7 +3173,6 @@ MonoBehaviour:
   _canFire: -1
   _lives: 3
   _spawnManager: {fileID: 1698583918}
-  _playerHomingLaserPrefab: {fileID: 6265573354245694596, guid: 5a9a6ff62d1e2d244bb4be5a2c263e25, type: 3}
   _homingLaserCount: 0
   _isPlayerHomingLaserActive: 0
   _tripleshotActive: 0
@@ -3393,19 +3393,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2698341573252862848, guid: f6aa630598c378f44a8bc45bd498e545, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2698341573252862848, guid: f6aa630598c378f44a8bc45bd498e545, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 2698341573252862848, guid: f6aa630598c378f44a8bc45bd498e545, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 2698341573252862848, guid: f6aa630598c378f44a8bc45bd498e545, type: 3}
       propertyPath: m_LocalScale.z
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 2698341573252862848, guid: f6aa630598c378f44a8bc45bd498e545, type: 3}
       propertyPath: m_LocalPosition.x

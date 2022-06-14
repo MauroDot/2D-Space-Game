@@ -19,6 +19,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
+    private GameObject _playerHomingLaserPrefab;
+    [SerializeField]
     private GameObject _tripleshotPrefab;
     [SerializeField]
     private GameObject _boosterShotPrefab;
@@ -37,8 +39,6 @@ public class Player : MonoBehaviour
     [SerializeField]
     private SpawnManager _spawnManager;
 
-    [SerializeField]
-    private GameObject _playerHomingLaserPrefab;
     [SerializeField]
     private int _homingLaserCount = 0;
     [SerializeField]
@@ -76,7 +76,7 @@ public class Player : MonoBehaviour
     private CameraShake _cameraShake;
 
     [SerializeField]
-    private int _ammoCount = 20;
+    private int _ammoCount = 100;
     [SerializeField]
     private int _maximumAmmoCount;
 
