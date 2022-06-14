@@ -17,6 +17,7 @@ public class Enemy : MonoBehaviour
     private float _fireRate = 6.0f;
     [SerializeField]
     private float canFire = -1;
+    private int _moveID;
 
 
     // Start is called before the first frame update
@@ -24,6 +25,7 @@ public class Enemy : MonoBehaviour
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
         _audioSource = GetComponent<AudioSource>();
+        _moveID = Random.Range(1, 4);
 
         if (_player == null)
         {
@@ -36,16 +38,18 @@ public class Enemy : MonoBehaviour
         {
             Debug.LogError("Animator is NULL!");
         }
+
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-       CalculateMovement();
+        CalculateMovement();
 
         if (Time.time > canFire)
         {
-            _fireRate = Random.Range(10f, 15f);
+            _fireRate = Random.Range(15f, 20f);
             canFire = Time.time + _fireRate;
             GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
             Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
@@ -62,12 +66,28 @@ public class Enemy : MonoBehaviour
 
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
-        if (transform.position.y < -10f)
+        if (transform.position.y < -15f)
         {
             float randomX = Random.Range(-2f, 15f);
-            transform.position = new Vector3(randomX, 9, 1);
+            transform.position = new Vector3(randomX, 15, 1);
+        }
+
+        switch(_moveID)
+        {
+            case 1:
+                transform.Translate((Vector3.down + Vector3.left) * Time.deltaTime);
+                break;
+            case 2:
+                transform.Translate((Vector3.down + Vector3.right) * Time.deltaTime);
+                break;
+            case 3:
+                transform.Translate(Vector3.down * Time.deltaTime);
+                break;
+            default:
+                break;
         }
     }
+
 
     private void OnTriggerEnter2D(Collider2D other)
     {
