@@ -22,6 +22,10 @@ public class UIManager : MonoBehaviour
     private Text _homingLaserCountText;
 
     private GameManager _gameManager;
+    private SpawnManager _spawnManager;
+
+    [SerializeField]
+    private Text _waveDisplay;
 
 
 
@@ -85,6 +89,22 @@ public class UIManager : MonoBehaviour
         else
         {
             _homingLaserCountText.color = Color.red;
+        }
+    }
+
+    public void DisplayWaveNumber(int waveNumber)
+    {
+        _waveDisplay.text = "Wave " + waveNumber;
+        _waveDisplay.gameObject.SetActive(true);
+        StartCoroutine(WaveDisplayRoutine());
+    }
+
+    IEnumerator WaveDisplayRoutine()
+    {
+        while(_waveDisplay == true)
+        {
+            yield return new WaitForSeconds(3f);
+            _waveDisplay.gameObject.SetActive(false);
         }
     }
 

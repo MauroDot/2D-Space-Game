@@ -57,7 +57,10 @@ public class Powerup : MonoBehaviour
                         player.PlayerHomingLaser();
                         break;
                     case 7:
-                        player.FlankCannonsACtive();
+                        player.FlankCannonsActive();
+                        break;
+                    case 8:
+                        player.SlowSpeedActive();
                         break;
                     default:
                         Debug.Log("Default Value");

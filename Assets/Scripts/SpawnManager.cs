@@ -13,35 +13,52 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private GameObject [] powerUps; //array braket to make a fixed list for all powerups
 
-   
-    // Start is called before the first frame update
-    void Start()
+    private int _waveNumber;
+    private int _enemiesDead;
+    private int _maxEnemies;
+    private int _enemiesLeftToSpawn;
+
+    private UIManager _uiManager;
+
+    public void Start()
     {
-        
+        _uiManager = GameObject.FindObjectOfType<UIManager>();
+    }
+    public void StartSpawning(int waveNumber)
+    {
+        if(waveNumber <= 5)
+        {
+            _stopSpawning = false;
+            _enemiesDead = 0;
+            _waveNumber = waveNumber;
+            _uiManager.DisplayWaveNumber(_waveNumber);
+            _enemiesLeftToSpawn = _waveNumber + 5;
+            _maxEnemies = _waveNumber + 5;
+            StartCoroutine(SpawnEnemyRoutine()); 
+            StartCoroutine(SpawnPowerupRoutine());
+        }
+        //else start boss battle
     }
 
-    public void StartSpawning()
-    {
-        StartCoroutine(SpawnEnemyRoutine());
-        StartCoroutine(SpawnPowerupRoutine());
-    }
+    
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
     IEnumerator SpawnEnemyRoutine()
     {
         yield return new WaitForSeconds(2.8f);
-        while (_stopSpawning == false)
+        while (_stopSpawning == false && _enemiesDead <= _maxEnemies)
         {
-            Vector3 posToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
+            Vector3 posToSpawn = new Vector3(Random.Range(-8.5f, 8.5f), 7, 0);
             GameObject newEnemy = Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity);
             newEnemy.transform.parent = _enemyContainer.transform;
-            yield return new WaitForSeconds(3.0f);
+
+            _enemiesLeftToSpawn--;
+            if(_enemiesLeftToSpawn == 0)
+            {
+                _stopSpawning = true;
+            }
+            yield return new WaitForSeconds(1f);
         }
-        
+        StartSpawning(_waveNumber + 1);
     }
 
     IEnumerator SpawnPowerupRoutine()
@@ -50,10 +67,15 @@ public class SpawnManager : MonoBehaviour
         while (_stopSpawning == false)
         {
             Vector3 postToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
-            int randomPowerup = Random.Range(0, 8);
+            int randomPowerup = Random.Range(0, 9);
             Instantiate(powerUps[randomPowerup], postToSpawn, Quaternion.identity);
             yield return new WaitForSeconds(Random.Range(3f, 5));
         }
+    }
+
+    public void EnemyDead()
+    {
+        _enemiesDead++;
     }
 
     public void OnPlayerDeath()

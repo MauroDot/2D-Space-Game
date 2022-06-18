@@ -219,6 +219,7 @@ GameObject:
   - component: {fileID: 4831794162226972820}
   - component: {fileID: 2383362102874230758}
   - component: {fileID: -3676580383083326275}
+  - component: {fileID: -3045841921809606847}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -255,10 +256,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df9c40c69b49df14fa55cdcf5c5483e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 5
+  _speed: 2
   _laserPrefab: {fileID: 4409107529824698269, guid: eacb45ca530de49439a59334f4666e71, type: 3}
   _fireRate: 20
   canFire: -1
+  _shield: {fileID: 3560636048974830361, guid: 6932a27d197fa514da48e6f7be5e65c0, type: 3}
 --- !u!212 &667495167981185163
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -472,6 +474,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-3045841921809606847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6337542177291271803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a22294e2c8297c04ba5f025524d1ae1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _resistance: 3
 --- !u!1001 &776520365
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -486,6 +501,10 @@ PrefabInstance:
     - target: {fileID: 100002, guid: a590c04abd57be544b50a1b51a6674ac, type: 3}
       propertyPath: m_Name
       value: FireBall
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: a590c04abd57be544b50a1b51a6674ac, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 100004, guid: a590c04abd57be544b50a1b51a6674ac, type: 3}
       propertyPath: m_IsActive

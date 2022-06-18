@@ -18,7 +18,9 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private float canFire = -1;
     private int _moveID;
-
+    [SerializeField]
+    private GameObject _shield;
+    private SpawnManager _spawnManager;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +28,7 @@ public class Enemy : MonoBehaviour
         _player = GameObject.Find("Player").GetComponent<Player>();
         _audioSource = GetComponent<AudioSource>();
         _moveID = Random.Range(1, 4);
+        _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
 
         if (_player == null)
         {
@@ -105,34 +108,25 @@ public class Enemy : MonoBehaviour
             _speed = 0;
             Destroy(this.gameObject, .8f);
             _audioSource.Play();
+            
         }
 
         if (other.tag == "Laser")
         {
+            Debug.Log("Laser Hit");
             Destroy(other.gameObject);
-            
+
             if (_player != null)
             {
                 _player.AddScore(1);
             }
             _anim.SetTrigger("EnemyExplode");
             _speed = 0;
-            Destroy(this.gameObject, .8f);
-            Destroy(GetComponent<Collider2D>());
+            GetComponent<Collider2D>().enabled = false;
             _audioSource.Play();
+            _spawnManager.EnemyDead();
+            Destroy(this.gameObject, .8f);
         }
 
-        if (other.tag == "HomingLaserPlayer")
-        {
-            if(_player != null)
-            {
-                _player.AddScore(10);
-            }
-            _anim.SetTrigger("EnemyExplode");
-            _speed = 0;
-            Destroy(this.gameObject, .8f);
-            Destroy(GetComponent<Collider2D>());
-            _audioSource.Play();
-        }
     }
 }

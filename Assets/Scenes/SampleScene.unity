@@ -2192,6 +2192,7 @@ RectTransform:
   - {fileID: 1140156191}
   - {fileID: 1297511148}
   - {fileID: 85896925}
+  - {fileID: 1408946443}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2223,6 +2224,86 @@ MonoBehaviour:
   _restartText: {fileID: 1994007589}
   _ammoText: {fileID: 1297511149}
   _homingLaserCountText: {fileID: 85896926}
+  _waveDisplay: {fileID: 1408946444}
+--- !u!1 &1408946442
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1408946443}
+  - component: {fileID: 1408946445}
+  - component: {fileID: 1408946444}
+  m_Layer: 5
+  m_Name: Wave_Display
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1408946443
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1408946442}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1387221985}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 382.4327, y: 149.7715}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1408946444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1408946442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.14076614, g: 1, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 5cb4434262dab0946b66d63c489196da, type: 3}
+    m_FontSize: 50
+    m_FontStyle: 3
+    m_BestFit: 0
+    m_MinSize: 0
+    m_MaxSize: 120
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 
+--- !u!222 &1408946445
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1408946442}
+  m_CullTransparentMesh: 1
 --- !u!1 &1445434448
 GameObject:
   m_ObjectHideFlags: 0
@@ -2588,6 +2669,7 @@ MonoBehaviour:
   - {fileID: 7894915348037232586, guid: 454531c3edff3a94186a74959254f928, type: 3}
   - {fileID: 5807069072764573194, guid: e15f14a83045a8f47bfdda4f8b65e424, type: 3}
   - {fileID: 1360165704848183691, guid: 0ccb4c9c163deca4cb7e36b7c4a78194, type: 3}
+  - {fileID: 7896704064505917723, guid: 7790a6a526cf7594ca03cad4943dd926, type: 3}
 --- !u!4 &1698583919
 Transform:
   m_ObjectHideFlags: 0
@@ -2716,10 +2798,10 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 19.2, y: 10.8}
+  m_Size: {x: 40.96, y: 40.96}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &1747296853
@@ -3053,6 +3135,7 @@ MonoBehaviour:
   _thrustRemaining: 100
   _thrustersActive: 0
   _speedBoostAmount: 15
+  _slowSpeed: 0
   _speed: 12
   _speedMultiplier: 2
   _laserPrefab: {fileID: 3562113920074601443, guid: 792fd45e656764b4980d9aabcfc04fc9, type: 3}
@@ -3068,11 +3151,12 @@ MonoBehaviour:
   _spawnManager: {fileID: 1698583918}
   _homingLaserCount: 0
   _isPlayerHomingLaserActive: 0
-  _tripleshotActive: 0
-  _speedOverloadActive: 0
-  _shieldBoostActive: 0
+  _isTripleshotActive: 0
+  _isSpeedOverloadActive: 0
+  _isShieldBoostActive: 0
   _isBoosterShotActive: 0
   _isFlankCannonAvtive: 0
+  _isSlowSpeedActive: 0
   _shieldVisualizer: {fileID: 739405182}
   _shieldPower: 0
   _rightEngine: {fileID: 1148166752}
@@ -3331,6 +3415,10 @@ PrefabInstance:
     - target: {fileID: 7627294192990294365, guid: f6aa630598c378f44a8bc45bd498e545, type: 3}
       propertyPath: m_Name
       value: Asteroid
+      objectReference: {fileID: 0}
+    - target: {fileID: 7627294192990294365, guid: f6aa630598c378f44a8bc45bd498e545, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f6aa630598c378f44a8bc45bd498e545, type: 3}

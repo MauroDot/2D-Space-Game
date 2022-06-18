@@ -13,6 +13,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     float _speedBoostAmount;
     [SerializeField]
+    float _slowSpeed;
+    [SerializeField]
     private float _speed = 9f;
     [SerializeField]
     private float _speedMultiplier = 2;
@@ -45,15 +47,17 @@ public class Player : MonoBehaviour
     private bool _isPlayerHomingLaserActive = false;
 
     [SerializeField]
-    private bool _tripleshotActive = false;
+    private bool _isTripleshotActive = false;
     [SerializeField]
-    private bool _speedOverloadActive = false;
+    private bool _isSpeedOverloadActive = false;
     [SerializeField]
-    private bool _shieldBoostActive = false;
+    private bool _isShieldBoostActive = false;
     [SerializeField]
     private bool _isBoosterShotActive = false;
     [SerializeField]
     private bool _isFlankCannonAvtive = false;
+    [SerializeField]
+    private bool _isSlowSpeedActive = false;
     
 
     //variable reference to the shield visualizer
@@ -152,9 +156,13 @@ public class Player : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
-        if(_speedOverloadActive == true)
+        if(_isSpeedOverloadActive == true)
         {
             transform.Translate(new Vector3(horizontalInput, verticalInput, 0) * _speed * _speedMultiplier * Time.deltaTime);
+        }
+        else if(_isSlowSpeedActive == true)
+        {
+            transform.Translate(new Vector3(horizontalInput, verticalInput, 0) * _speed * 0.2f * Time.deltaTime);
         }
         else
         {
@@ -178,14 +186,14 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.J) || Input.GetKey(KeyCode.LeftShift) && _thrustRemaining > 0)
         {
             _thrustersActive = true;
-            _speedOverloadActive = true;
+            _isSpeedOverloadActive = true;
             _thruster.SetActive(true);
         }
 
         if (Input.GetKeyUp(KeyCode.J) || Input.GetKeyDown(KeyCode.LeftShift))
         {
             _thrustersActive = false;
-            _speedOverloadActive = false;
+            _isSpeedOverloadActive = false;
             _thruster.SetActive(false);
         }
     }
@@ -213,7 +221,7 @@ public class Player : MonoBehaviour
         if (_thrustRemaining < 5)
         {
             _thrustersActive = false;
-            _speedOverloadActive = false;
+            _isSpeedOverloadActive = false;
             _thruster.SetActive(false);
         }
     }
@@ -227,25 +235,15 @@ public class Player : MonoBehaviour
     {
         _canFire = Time.time + _fireRate;
 
-        if (_tripleshotActive == true)
+        if (_isTripleshotActive == true)
         {
             Instantiate(_tripleshotPrefab, transform.position, Quaternion.identity);
         }
-        else
-        {
-            Instantiate(_laserPrefab, transform.position + LaserOffset, Quaternion.identity);
-        }
-        
-        if (_isBoosterShotActive == true)
+        else if (_isBoosterShotActive == true)
         {
             Instantiate(_boosterShotPrefab, transform.position, Quaternion.identity);
         }
-        else
-        {
-            Instantiate(_laserPrefab, transform.position + LaserOffset, Quaternion.identity);
-        }
-
-        if (_isFlankCannonAvtive == true)
+        else if (_isFlankCannonAvtive == true)
         {
             Instantiate(_flankCannonPrefab, transform.position, Quaternion.identity);
         }
@@ -258,13 +256,13 @@ public class Player : MonoBehaviour
     }
     public void Damage()
     {
-        if(_shieldBoostActive == true)
+        if(_isShieldBoostActive == true)
         {
             _shieldPower--;
 
             if(_shieldPower == 0)
             {
-                _shieldBoostActive = false;
+                _isShieldBoostActive = false;
                 _shieldVisualizer.SetActive(false);
                 return;
             }
@@ -305,14 +303,14 @@ public class Player : MonoBehaviour
     //create method for TripleShotActive
     public void TripleShotActive()
     {
-        _tripleshotActive = true;
+        _isTripleshotActive = true;
         StartCoroutine(TripleShotPowerdownRoutine());
     }
 
     IEnumerator TripleShotPowerdownRoutine()
     {
         yield return new WaitForSeconds(5.0f);
-        _tripleshotActive = false;
+        _isTripleshotActive = false;
     }
 
     public void BoosterShotActive()
@@ -327,7 +325,7 @@ public class Player : MonoBehaviour
         _isBoosterShotActive = false;
     }
 
-    public void FlankCannonsACtive()
+    public void FlankCannonsActive()
     {
         _isFlankCannonAvtive = true;
         StartCoroutine(FlankCannonsPowerDownRoutine());
@@ -341,7 +339,7 @@ public class Player : MonoBehaviour
 
     public void SpeedBoostActive()
     {
-        _speedOverloadActive = true;
+        _isSpeedOverloadActive = true;
         _speed *= _speedMultiplier;
         StartCoroutine(SpeedBoostPowerdownRoutine());
     }
@@ -349,8 +347,23 @@ public class Player : MonoBehaviour
     IEnumerator SpeedBoostPowerdownRoutine()
     {
         yield return new WaitForSeconds(5.0f);
-        _speedOverloadActive = false;
+        _isSpeedOverloadActive = false;
         _speed /= _speedMultiplier;
+    }
+
+    public void SlowSpeedActive()
+    {
+        _isSlowSpeedActive = true;
+        _thrustersActive = false;
+        StartCoroutine(SlowSpeedPowerdownRoutine());    
+    }
+
+    IEnumerator SlowSpeedPowerdownRoutine()
+    {
+        yield return new WaitForSeconds(15f);
+        _thrustersActive = true;
+        _isSlowSpeedActive = false;
+        _isSpeedOverloadActive = false;
     }
 
     public void ShieldsActive()
@@ -358,7 +371,7 @@ public class Player : MonoBehaviour
         if(_shieldPower < 3)
         {
             _shieldPower++;
-            _shieldBoostActive = true;
+            _isShieldBoostActive = true;
             _shieldVisualizer.SetActive(true);
         }
         if(_shieldPower == 1)
