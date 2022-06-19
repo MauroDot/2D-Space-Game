@@ -22,7 +22,7 @@ public class UIManager : MonoBehaviour
     private Text _homingLaserCountText;
 
     private GameManager _gameManager;
-    private SpawnManager _spawnManager;
+    //private SpawnManager _spawnManager;
 
     [SerializeField]
     private Text _waveDisplay;
