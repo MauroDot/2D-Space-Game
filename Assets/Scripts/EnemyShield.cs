@@ -4,27 +4,19 @@ using UnityEngine;
 
 public class EnemyShield : MonoBehaviour
 {
-    public void EnemyShieldOn()
-    {
-        gameObject.SetActive(true);
-    }
-
-    public void EnemyShieldOff()
-    {
-        gameObject.SetActive(false);
-    }
-
-    public void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.CompareTag("Player"))
         {
-            EnemyShieldOff();
+            Player player = other.transform.GetComponent<Player>();
+
+            player.Damage();
+            Destroy(gameObject);
         }
 
         if(other.CompareTag("Laser"))
         {
-            Destroy(other.gameObject);
-            EnemyShieldOff();
+            Destroy(gameObject);
         }
     }
 }

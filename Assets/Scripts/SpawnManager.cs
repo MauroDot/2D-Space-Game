@@ -17,6 +17,7 @@ public class SpawnManager : MonoBehaviour
     private int _enemiesDead;
     private int _maxEnemies;
     private int _enemiesLeftToSpawn;
+    
 
     private UIManager _uiManager;
 
@@ -48,7 +49,7 @@ public class SpawnManager : MonoBehaviour
         while (_stopSpawning == false && _enemiesDead <= _maxEnemies)
         {
             Vector3 posToSpawn = new Vector3(Random.Range(-8.5f, 8.5f), 7, 0);
-            GameObject newEnemy = Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity);
+            GameObject newEnemy = Instantiate(_enemyPrefab,  posToSpawn, Quaternion.identity);
             newEnemy.transform.parent = _enemyContainer.transform;
 
             _enemiesLeftToSpawn--;

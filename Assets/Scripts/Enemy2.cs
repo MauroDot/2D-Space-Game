@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy2 : MonoBehaviour
 {
     [SerializeField]
     private float _speed = 5f;
@@ -17,7 +17,9 @@ public class Enemy : MonoBehaviour
     private float _fireRate = 10.0f;
     [SerializeField]
     private float canFire = -1;
-    private int _moveID;
+    //private int _moveID;
+    [SerializeField]
+    private GameObject _shield;
     private SpawnManager _spawnManager;
 
     [SerializeField]
@@ -29,10 +31,7 @@ public class Enemy : MonoBehaviour
     private int _enemyID;
 
     [SerializeField]
-    private GameObject _shieldVisualizer;
-    [SerializeField]
-    private bool _isShieldActive = false;
-
+    private bool _isEnemyShieldActive;
 
     // Start is called before the first frame update
     void Start()
@@ -40,11 +39,12 @@ public class Enemy : MonoBehaviour
         _fireRate = 10.0f;
         _player = GameObject.Find("Player").GetComponent<Player>();
         _audioSource = GetComponent<AudioSource>();
-        _moveID = Random.Range(1, 4);
+        //_moveID = Random.Range(1, 4);
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         //_enemyType = Random.Range(0, 2);
         _enemyID = Random.Range(0, 3);
         _detectRange = 6f;
+        _isEnemyShieldActive = true;
 
         if (_player == null)
         {
@@ -53,7 +53,7 @@ public class Enemy : MonoBehaviour
 
         _anim = GetComponent<Animator>();
 
-        if(_anim == null)
+        if (_anim == null)
         {
             Debug.LogError("Animator is NULL!");
         }
@@ -64,32 +64,27 @@ public class Enemy : MonoBehaviour
         CalculateMovement();
         EnemyID();
         BaseEnemy();
+        DeactivateShield();
     }
 
     void CalculateMovement()
     {
-        transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        transform.Translate(Vector3.left * _speed * Time.deltaTime);
 
-        if (transform.position.y < -15f)
+        if (transform.position.x < -15f)
         {
             float randomX = Random.Range(-2f, 15f);
             transform.position = new Vector3(randomX, 15, 1);
         }
 
-        switch(_moveID)
-        {
-            case 1:
-                transform.Translate((Vector3.down + Vector3.left) * Time.deltaTime);
-                break;
-            case 2:
-                transform.Translate((Vector3.down + Vector3.right) * Time.deltaTime);
-                break;
-            case 3:
-                transform.Translate(Vector3.down * Time.deltaTime);
-                break;
-            default:
-                break;
-        }
+    }
+
+    private void DeactivateShield()
+    {
+        _shield.SetActive(false);
+
+        _isEnemyShieldActive = false;
+        return;
     }
 
     void EnemyID()
@@ -133,38 +128,46 @@ public class Enemy : MonoBehaviour
                 transform.position = Vector3.MoveTowards(transform.position, _player.transform.position, _ramSpeed * Time.deltaTime);
             }
         }
+
     }
 
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Player player = other.transform.GetComponent<Player>();
+        Debug.Log("Hit: " + other.transform.name);
 
-        if(player != null)
+        if (other.tag == "Player")
         {
-            player.Damage();
-        }
-        if(other.tag == "Player")
-        {
-            Damage();
-        }
+            if (_isEnemyShieldActive == true)
+            {
+                DeactivateShield();
+            }
+            else
+            {
+                Destroy(this.gameObject);
+            }
 
-        if(other.tag == "Laser")
+            Player player = other.transform.GetComponent<Player>();
+
+            if (player != null)
+            {
+                player.Damage();
+            }
+            _anim.SetTrigger("EnemyExplode");
+            _speed = 0;
+            Destroy(this.gameObject, .8f);
+            _audioSource.Play();
+        }
+        if (other.tag == "Laser")
         {
+            Debug.Log("Laser Hit");
             Destroy(other.gameObject);
-            Damage();
-        }
-    }
 
-    void Damage()
-    {
-        if(_isShieldActive == true)
-        {
-            _isShieldActive = false;
-            _shieldVisualizer.SetActive(false);
-        }
-        else
-        {
+            if (_player != null)
+            {
+                _player.AddScore(1);
+            }
+
             _anim.SetTrigger("EnemyExplode");
             _speed = 0;
             _ramSpeed = 0;
@@ -172,22 +175,8 @@ public class Enemy : MonoBehaviour
             _audioSource.Play();
             _spawnManager.EnemyDead();
             Destroy(this.gameObject, .8f);
-        }
-    }
 
-    public void IsShieldActive()
-    {
-        int probability = Random.Range(1, 101);
-        Debug.Log(probability);
-        if(probability > 65)
-        {
-            _isShieldActive = true;
-            _shieldVisualizer.SetActive(true);
-        }
-        else
-        {
-            _isShieldActive = false;
-            _shieldVisualizer.SetActive(false);
         }
     }
 }
+
