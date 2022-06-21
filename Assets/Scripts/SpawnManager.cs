@@ -33,15 +33,13 @@ public class SpawnManager : MonoBehaviour
             _enemiesDead = 0;
             _waveNumber = waveNumber;
             _uiManager.DisplayWaveNumber(_waveNumber);
-            _enemiesLeftToSpawn = _waveNumber + 10;
-            _maxEnemies = _waveNumber + 10;
+            _enemiesLeftToSpawn = _waveNumber + 20;
+            _maxEnemies = _waveNumber + 20;
             StartCoroutine(SpawnEnemyRoutine()); 
             StartCoroutine(SpawnPowerupRoutine());
         }
         //else start boss battle
     }
-
-    
 
     IEnumerator SpawnEnemyRoutine()
     {
@@ -50,6 +48,7 @@ public class SpawnManager : MonoBehaviour
         {
             Vector3 posToSpawn = new Vector3(Random.Range(-8.5f, 8.5f), 7, 0);
             GameObject newEnemy = Instantiate(_enemyPrefab,  posToSpawn, Quaternion.identity);
+            //_enemiesLeftToSpawn.IsShieldActive();
             newEnemy.transform.parent = _enemyContainer.transform;
 
             _enemiesLeftToSpawn--;
@@ -60,6 +59,7 @@ public class SpawnManager : MonoBehaviour
             yield return new WaitForSeconds(1f);
         }
         StartSpawning(_waveNumber + 1);
+        yield return new WaitForSeconds(3f);
     }
 
     IEnumerator SpawnPowerupRoutine()

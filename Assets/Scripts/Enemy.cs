@@ -43,7 +43,7 @@ public class Enemy : MonoBehaviour
         _moveID = Random.Range(1, 4);
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         //_enemyType = Random.Range(0, 2);
-        _enemyID = Random.Range(0, 3);
+        _enemyID = Random.Range(0, 2);
         _detectRange = 6f;
 
         if (_player == null)
@@ -172,6 +172,10 @@ public class Enemy : MonoBehaviour
             _audioSource.Play();
             _spawnManager.EnemyDead();
             Destroy(this.gameObject, .8f);
+        }
+        if (_player != null)
+        {
+            _player.AddScore(1);
         }
     }
 
