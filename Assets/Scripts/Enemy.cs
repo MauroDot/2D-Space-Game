@@ -68,10 +68,10 @@ public class Enemy : MonoBehaviour
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
-        if (transform.position.y < -15f)
+        if (transform.position.y < -10f)
         {
             float randomX = Random.Range(-2f, 15f);
-            transform.position = new Vector3(randomX, 15, 1);
+            transform.position = new Vector3(randomX, 10, 1);
         }
     }
 

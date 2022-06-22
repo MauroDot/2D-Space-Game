@@ -70,9 +70,9 @@ public class Enemy2 : MonoBehaviour
         transform.Translate(Vector3.right * _speed * Time.deltaTime);
         Vector3 posToSpawn = new Vector3(Random.Range(-10.5f, 10.5f), 4, 0);
 
-        if (transform.position.y < -15f)
+        if (transform.position.y < -10f)
         {
-            float randomX = Random.Range(-2f, 16f);
+            float randomX = Random.Range(-5f, 15f);
             transform.position = new Vector3(randomX, 16, 1);
         }
         if (transform.position.x > 15.34f)

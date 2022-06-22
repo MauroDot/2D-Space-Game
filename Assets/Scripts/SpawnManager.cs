@@ -46,7 +46,7 @@ public class SpawnManager : MonoBehaviour
         yield return new WaitForSeconds(1.8f);
         while (_stopSpawning == false && _enemiesDead <= _maxEnemies)
         {
-            Vector3 posToSpawn = new Vector3(Random.Range(-8.5f, 8.5f), 7, 0);
+            Vector3 posToSpawn = new Vector3(Random.Range(-9.5f, 9.5f), 8, 0);
             GameObject newEnemy = Instantiate(_enemyPrefab,  posToSpawn, Quaternion.identity);
             newEnemy = Instantiate(_enemy2Prefab, posToSpawn, Quaternion.identity);
             //_enemyPrefab.IsShieldActive();
