@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
     [SerializeField]
-    private GameObject _enemyPrefab;
+    private GameObject _enemyPrefab, _enemy2Prefab;
     [SerializeField]
     private GameObject _enemyContainer;
     [SerializeField]
@@ -33,8 +33,8 @@ public class SpawnManager : MonoBehaviour
             _enemiesDead = 0;
             _waveNumber = waveNumber;
             _uiManager.DisplayWaveNumber(_waveNumber);
-            _enemiesLeftToSpawn = _waveNumber + 20;
-            _maxEnemies = _waveNumber + 20;
+            _enemiesLeftToSpawn = _waveNumber + 40;
+            _maxEnemies = _waveNumber + 40;
             StartCoroutine(SpawnEnemyRoutine()); 
             StartCoroutine(SpawnPowerupRoutine());
         }
@@ -43,12 +43,13 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator SpawnEnemyRoutine()
     {
-        yield return new WaitForSeconds(2.8f);
+        yield return new WaitForSeconds(1.8f);
         while (_stopSpawning == false && _enemiesDead <= _maxEnemies)
         {
             Vector3 posToSpawn = new Vector3(Random.Range(-8.5f, 8.5f), 7, 0);
             GameObject newEnemy = Instantiate(_enemyPrefab,  posToSpawn, Quaternion.identity);
-            //_enemiesLeftToSpawn.IsShieldActive();
+            newEnemy = Instantiate(_enemy2Prefab, posToSpawn, Quaternion.identity);
+            //_enemyPrefab.IsShieldActive();
             newEnemy.transform.parent = _enemyContainer.transform;
 
             _enemiesLeftToSpawn--;
@@ -70,7 +71,7 @@ public class SpawnManager : MonoBehaviour
             Vector3 postToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
             int randomPowerup = Random.Range(0, 9);
             Instantiate(powerUps[randomPowerup], postToSpawn, Quaternion.identity);
-            yield return new WaitForSeconds(Random.Range(3f, 5));
+            yield return new WaitForSeconds(Random.Range(3f, 5f));
         }
     }
 

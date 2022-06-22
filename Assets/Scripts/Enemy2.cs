@@ -17,21 +17,22 @@ public class Enemy2 : MonoBehaviour
     private float _fireRate = 10.0f;
     [SerializeField]
     private float canFire = -1;
-    //private int _moveID;
-    [SerializeField]
-    private GameObject _shield;
+    
     private SpawnManager _spawnManager;
-
     [SerializeField]
-    //private int _enemyType;
-    private float _detectRange = 6f;
+    private int _moveID;
+    [SerializeField]
+    private float _detectRange = 30f;
     [SerializeField]
     private int _ramSpeed = 5;
     [SerializeField]
     private int _enemyID;
 
     [SerializeField]
-    private bool _isEnemyShieldActive;
+    private GameObject _shieldVisualizer;
+    [SerializeField]
+    private bool _isShieldActive = false;
+
 
     // Start is called before the first frame update
     void Start()
@@ -39,12 +40,10 @@ public class Enemy2 : MonoBehaviour
         _fireRate = 10.0f;
         _player = GameObject.Find("Player").GetComponent<Player>();
         _audioSource = GetComponent<AudioSource>();
-        //_moveID = Random.Range(1, 4);
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
-        //_enemyType = Random.Range(0, 2);
-        _enemyID = Random.Range(0, 3);
+        _moveID = Random.Range(1, 3);
+        _enemyID = Random.Range(0, 2);
         _detectRange = 6f;
-        _isEnemyShieldActive = true;
 
         if (_player == null)
         {
@@ -53,7 +52,7 @@ public class Enemy2 : MonoBehaviour
 
         _anim = GetComponent<Animator>();
 
-        if (_anim == null)
+        if(_anim == null)
         {
             Debug.LogError("Animator is NULL!");
         }
@@ -63,28 +62,27 @@ public class Enemy2 : MonoBehaviour
     {
         CalculateMovement();
         EnemyID();
-        BaseEnemy();
-        DeactivateShield();
+
     }
 
     void CalculateMovement()
     {
-        transform.Translate(Vector3.left * _speed * Time.deltaTime);
+        transform.Translate(Vector3.right * _speed * Time.deltaTime);
+        Vector3 posToSpawn = new Vector3(Random.Range(-10.5f, 10.5f), 4, 0);
 
-        if (transform.position.x < -15f)
+        if (transform.position.y < -15f)
         {
-            float randomX = Random.Range(-2f, 15f);
-            transform.position = new Vector3(randomX, 15, 1);
+            float randomX = Random.Range(-2f, 16f);
+            transform.position = new Vector3(randomX, 16, 1);
         }
-
-    }
-
-    private void DeactivateShield()
-    {
-        _shield.SetActive(false);
-
-        _isEnemyShieldActive = false;
-        return;
+        if (transform.position.x > 15.34f)
+        {
+            transform.position = new Vector3(-15.34f, transform.position.y, 0);
+        }
+        else if (transform.position.x < -15.34f)
+        {
+            transform.position = new Vector3(15.34f, transform.position.y, 0);
+        }
     }
 
     void EnemyID()
@@ -105,12 +103,40 @@ public class Enemy2 : MonoBehaviour
 
     void BaseEnemy()
     {
+        switch (_moveID)
+        {
+            case 1:
+                transform.Translate((Vector3.down + Vector3.left) * Time.deltaTime);
+                break;
+            case 2:
+                transform.Translate((Vector3.down + Vector3.right) * Time.deltaTime);
+                break;
+            case 3:
+                transform.Translate(Vector3.down * Time.deltaTime);
+                break;
+            default:
+                break;
+        }
+
         if (Time.time > canFire)
         {
             _fireRate = Random.Range(4f, 6f);
             canFire = Time.time + _fireRate;
             GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
             Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
+
+            int probability = Random.Range(1, 101);
+            Debug.Log(probability);
+            if (probability > 80)
+            {
+                _isShieldActive = true;
+                _shieldVisualizer.SetActive(true);
+            }
+            else
+            {
+                _isShieldActive = false;
+                _shieldVisualizer.SetActive(false);
+            }
 
             for (int i = 0; i < lasers.Length; i++)
             {
@@ -128,46 +154,38 @@ public class Enemy2 : MonoBehaviour
                 transform.position = Vector3.MoveTowards(transform.position, _player.transform.position, _ramSpeed * Time.deltaTime);
             }
         }
-
     }
 
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Hit: " + other.transform.name);
+        Player player = other.transform.GetComponent<Player>();
 
-        if (other.tag == "Player")
+        if(player != null)
         {
-            if (_isEnemyShieldActive == true)
-            {
-                DeactivateShield();
-            }
-            else
-            {
-                Destroy(this.gameObject);
-            }
-
-            Player player = other.transform.GetComponent<Player>();
-
-            if (player != null)
-            {
-                player.Damage();
-            }
-            _anim.SetTrigger("EnemyExplode");
-            _speed = 0;
-            Destroy(this.gameObject, .8f);
-            _audioSource.Play();
+            player.Damage();
         }
-        if (other.tag == "Laser")
+        if(other.tag == "Player")
         {
-            Debug.Log("Laser Hit");
+            Damage();
+        }
+
+        if(other.tag == "Laser")
+        {
             Destroy(other.gameObject);
+            Damage();
+        }
+    }
 
-            if (_player != null)
-            {
-                _player.AddScore(1);
-            }
-
+    void Damage()
+    {
+        if(_isShieldActive == true)
+        {
+            _isShieldActive = false;
+            _shieldVisualizer.SetActive(false);
+        }
+        else
+        {
             _anim.SetTrigger("EnemyExplode");
             _speed = 0;
             _ramSpeed = 0;
@@ -175,8 +193,10 @@ public class Enemy2 : MonoBehaviour
             _audioSource.Play();
             _spawnManager.EnemyDead();
             Destroy(this.gameObject, .8f);
-
+        }
+        if (_player != null)
+        {
+            _player.AddScore(1);
         }
     }
 }
-

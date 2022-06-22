@@ -17,11 +17,11 @@ public class Enemy : MonoBehaviour
     private float _fireRate = 10.0f;
     [SerializeField]
     private float canFire = -1;
-    private int _moveID;
+    
     private SpawnManager _spawnManager;
-
     [SerializeField]
-    //private int _enemyType;
+    private int _moveID;
+    [SerializeField]
     private float _detectRange = 6f;
     [SerializeField]
     private int _ramSpeed = 5;
@@ -40,9 +40,8 @@ public class Enemy : MonoBehaviour
         _fireRate = 10.0f;
         _player = GameObject.Find("Player").GetComponent<Player>();
         _audioSource = GetComponent<AudioSource>();
-        _moveID = Random.Range(1, 4);
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
-        //_enemyType = Random.Range(0, 2);
+        _moveID = Random.Range(1, 3);
         _enemyID = Random.Range(0, 2);
         _detectRange = 6f;
 
@@ -63,7 +62,6 @@ public class Enemy : MonoBehaviour
     {
         CalculateMovement();
         EnemyID();
-        BaseEnemy();
     }
 
     void CalculateMovement()
@@ -74,21 +72,6 @@ public class Enemy : MonoBehaviour
         {
             float randomX = Random.Range(-2f, 15f);
             transform.position = new Vector3(randomX, 15, 1);
-        }
-
-        switch(_moveID)
-        {
-            case 1:
-                transform.Translate((Vector3.down + Vector3.left) * Time.deltaTime);
-                break;
-            case 2:
-                transform.Translate((Vector3.down + Vector3.right) * Time.deltaTime);
-                break;
-            case 3:
-                transform.Translate(Vector3.down * Time.deltaTime);
-                break;
-            default:
-                break;
         }
     }
 
@@ -110,12 +93,40 @@ public class Enemy : MonoBehaviour
 
     void BaseEnemy()
     {
+        switch (_moveID)
+        {
+            case 1:
+                transform.Translate((Vector3.down + Vector3.left) * Time.deltaTime);
+                break;
+            case 2:
+                transform.Translate((Vector3.down + Vector3.right) * Time.deltaTime);
+                break;
+            case 3:
+                transform.Translate(Vector3.down * Time.deltaTime);
+                break;
+            default:
+                break;
+        }
+
         if (Time.time > canFire)
         {
             _fireRate = Random.Range(4f, 6f);
             canFire = Time.time + _fireRate;
             GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
             Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
+
+            int probability = Random.Range(1, 101);
+            Debug.Log(probability);
+            if (probability > 80)
+            {
+                _isShieldActive = true;
+                _shieldVisualizer.SetActive(true);
+            }
+            else
+            {
+                _isShieldActive = false;
+                _shieldVisualizer.SetActive(false);
+            }
 
             for (int i = 0; i < lasers.Length; i++)
             {
@@ -176,22 +187,6 @@ public class Enemy : MonoBehaviour
         if (_player != null)
         {
             _player.AddScore(1);
-        }
-    }
-
-    public void IsShieldActive()
-    {
-        int probability = Random.Range(1, 101);
-        Debug.Log(probability);
-        if(probability > 65)
-        {
-            _isShieldActive = true;
-            _shieldVisualizer.SetActive(true);
-        }
-        else
-        {
-            _isShieldActive = false;
-            _shieldVisualizer.SetActive(false);
         }
     }
 }
