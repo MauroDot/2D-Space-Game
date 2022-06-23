@@ -43,7 +43,7 @@ public class Enemy2 : MonoBehaviour
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _moveID = Random.Range(1, 3);
         _enemyID = Random.Range(0, 2);
-        _detectRange = 6f;
+        _detectRange = 10f;
 
         if (_player == null)
         {

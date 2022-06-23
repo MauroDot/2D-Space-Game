@@ -263,7 +263,7 @@ MonoBehaviour:
   _fireRate: 10
   canFire: -1
   _moveID: 0
-  _detectRange: 6
+  _detectRange: 5
   _ramSpeed: 5
   _enemyID: 0
   _shieldVisualizer: {fileID: 3848625461487478583, guid: 49660986406add943960e27f83ef30e5, type: 3}

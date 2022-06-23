@@ -30,8 +30,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6360891602395218094}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.4604, z: 0}
-  m_LocalScale: {x: 0.6, y: 0.6, z: 36}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_Children:
   - {fileID: 4644018908747546}
   - {fileID: 7383186908908979998}
@@ -263,13 +263,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 605eb59bb91c5aa40a5844a6883359fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 5
+  _speed: 3.5
   _laserPrefab: {fileID: 0}
   _fireRate: 1
   canFire: -1
   _moveID: 0
-  _detectRange: 100
-  _ramSpeed: 11
+  _detectRange: 10
+  _ramSpeed: 8
   _enemyID: 0
   _shieldVisualizer: {fileID: 0}
   _isShieldActive: 0

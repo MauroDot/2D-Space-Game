@@ -33,8 +33,8 @@ public class SpawnManager : MonoBehaviour
             _enemiesDead = 0;
             _waveNumber = waveNumber;
             _uiManager.DisplayWaveNumber(_waveNumber);
-            _enemiesLeftToSpawn = _waveNumber + 40;
-            _maxEnemies = _waveNumber + 40;
+            _enemiesLeftToSpawn = _waveNumber + 15;
+            _maxEnemies = _waveNumber + 15;
             StartCoroutine(SpawnEnemyRoutine()); 
             StartCoroutine(SpawnPowerupRoutine());
         }
