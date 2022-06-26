@@ -3,7 +3,20 @@ guid: 7c41eaa98928542418e52dba44893641
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - _thruster: {instanceID: 0}
+  - _laserPrefab: {instanceID: 0}
+  - _playerHomingLaserPrefab: {instanceID: 0}
+  - _tripleshotPrefab: {instanceID: 0}
+  - _boosterShotPrefab: {instanceID: 0}
+  - _flankCannonPrefab: {instanceID: 0}
+  - _isHealPickupActive: {instanceID: 0}
+  - _spawnManager: {instanceID: 0}
+  - _shieldVisualizer: {instanceID: 0}
+  - _rightEngine: {instanceID: 0}
+  - _leftEngine: {instanceID: 0}
+  - _laserEffectClip: {instanceID: 0}
+  - _playerThrusterBarSlider: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

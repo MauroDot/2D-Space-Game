@@ -89,7 +89,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        transform.position = new Vector3(0, -2.71f, 0);
+        transform.position = new Vector3(0, -5.25f, 0);
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _audioSource = GetComponent<AudioSource>();
@@ -127,7 +127,15 @@ public class Player : MonoBehaviour
         ThrustersRecharge();
         ThrusterDrain();
         BoosterExaughsted();
-        
+
+        if (Input.GetKey(KeyCode.Space) && Time.time > _canFire && _ammoCount != 0)
+        {
+            FireLaser();
+
+            _audioSource.Play();
+            _ammoCount -= 1;
+            _uiManager.UpdateAmmoCount(_ammoCount, _maximumAmmoCount);
+        }
 
         if (Input.GetKeyDown(KeyCode.M))
         {
@@ -142,14 +150,7 @@ public class Player : MonoBehaviour
             _isPlayerHomingLaserActive = false;
         }
 
-        if(Input.GetKey(KeyCode.Space) && Time.time > _canFire && _ammoCount != 0)
-        {
-            FireLaser();
-
-            _audioSource.Play();
-            _ammoCount -= 1;
-            _uiManager.UpdateAmmoCount(_ammoCount, _maximumAmmoCount);
-        }
+        
     }
     void calculateMovement()
     {
@@ -234,6 +235,7 @@ public class Player : MonoBehaviour
     void FireLaser()
     {
         _canFire = Time.time + _fireRate;
+       
 
         if (_isTripleshotActive == true)
         {
@@ -251,8 +253,8 @@ public class Player : MonoBehaviour
         {
             Instantiate(_laserPrefab, transform.position + LaserOffset, Quaternion.identity);
         }
-
         _audioSource.Play();
+
     }
     public void Damage()
     {

@@ -122,8 +122,8 @@ public class Enemy2 : MonoBehaviour
         {
             _fireRate = Random.Range(4f, 6f);
             canFire = Time.time + _fireRate;
-            GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
-            Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
+            //GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
+            //Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
 
             int probability = Random.Range(1, 101);
             Debug.Log(probability);
@@ -138,10 +138,10 @@ public class Enemy2 : MonoBehaviour
                 _shieldVisualizer.SetActive(false);
             }
 
-            for (int i = 0; i < lasers.Length; i++)
+            /*for (int i = 0; i < lasers.Length; i++)
             {
                 lasers[i].AssignEnemyLaser();
-            }
+            }*/
         }
     }
 

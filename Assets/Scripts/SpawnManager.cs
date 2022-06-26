@@ -43,7 +43,7 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator SpawnEnemyRoutine()
     {
-        yield return new WaitForSeconds(1.8f);
+        yield return new WaitForSeconds(2.8f);
         while (_stopSpawning == false && _enemiesDead <= _maxEnemies)
         {
             Vector3 posToSpawn = new Vector3(Random.Range(-9.5f, 9.5f), 8, 0);
@@ -57,7 +57,7 @@ public class SpawnManager : MonoBehaviour
             {
                 _stopSpawning = true;
             }
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(2.0f);
         }
         StartSpawning(_waveNumber + 1);
         yield return new WaitForSeconds(3f);
