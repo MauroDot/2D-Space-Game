@@ -12,10 +12,60 @@ public class Powerup : MonoBehaviour
     [SerializeField]
     private AudioClip _audioClip;
 
+    [SerializeField]
+    private GameObject _toPlayer;
+    private Vector3 _toPlayerDirection;
+    void Start()
+    {
+        if(GameObject.Find("Player") !=null)
+        {
+            _toPlayer = GameObject.Find("Player");
+        }
+        else
+        {
+            Debug.Log("Powerup:: Start() - _toPlayer is null");
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        float moveHorizontal;
+        float moveVertical;
+
+        if(Input.GetKey(KeyCode.H))
+        {
+            if (transform.position.x < _toPlayer.transform.position.x)
+            {
+                //move to right
+                moveHorizontal = 3;
+            }
+            else
+            {
+                //move to left
+                moveHorizontal = -3;
+            }
+
+            if(transform.position.y < _toPlayer.transform.position.y)
+            {
+                //move up
+                moveVertical = 3;
+            }
+            else
+            {
+                //move down
+                moveVertical= -3;
+            }
+
+            _toPlayerDirection = new Vector3(moveHorizontal, moveVertical, 0);
+            transform.Translate(_toPlayerDirection * (_speed - 1) * Time.deltaTime);
+        }
+        else
+        {
+            transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        }
+
+        
 
         if(transform.position.y < -6.5f)
         {

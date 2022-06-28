@@ -1669,7 +1669,7 @@ Transform:
   m_GameObject: {fileID: 381287501}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.12, y: -0.66, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0}
   m_Children:
   - {fileID: 1336235979}
   - {fileID: 1153046016}
@@ -2387,8 +2387,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 918538724}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.01, y: -3.31, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0}
+  m_LocalPosition: {x: 0, y: -2.21, z: 0}
+  m_LocalScale: {x: 0.2, y: 0.3, z: 0}
   m_Children:
   - {fileID: 612056430}
   m_Father: {fileID: 0}
@@ -2960,7 +2960,7 @@ Transform:
   m_GameObject: {fileID: 1187417544}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.74, y: 1.28, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0}
   m_Children:
   - {fileID: 227097475}
   - {fileID: 2124272875}
@@ -3523,6 +3523,10 @@ PrefabInstance:
     - target: {fileID: 100008, guid: 5372b37f496b28548942cf8e99afeb2e, type: 3}
       propertyPath: m_Name
       value: Hole
+      objectReference: {fileID: 0}
+    - target: {fileID: 100008, guid: 5372b37f496b28548942cf8e99afeb2e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5372b37f496b28548942cf8e99afeb2e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4312,7 +4316,7 @@ Transform:
   m_GameObject: {fileID: 2338115869535796108}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.69, y: 4.12, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0}
   m_Children:
   - {fileID: 6166657014376419421}
   - {fileID: 1374108953325386002}

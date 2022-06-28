@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     float _slowSpeed;
     [SerializeField]
-    private float _speed = 9f;
+    private float _speed = 4f;
     [SerializeField]
     private float _speedMultiplier = 2;
     [SerializeField]
@@ -84,6 +84,15 @@ public class Player : MonoBehaviour
     [SerializeField]
     private int _maximumAmmoCount;
 
+    private float _activeMoveSpeed;
+    public float _dashSpeed = 15f, _dashLength = .3f, _dashCooldown = 3f, _dashInvincibility = .3f;
+    private float _dashCounter, _dashCoolCounter;
+    public float damageInvicLength = 1f;
+    private float invincCount;
+    public SpriteRenderer bodySR;
+    //private Animation anim;
+    //private Animator _animator;
+
     
 
     // Start is called before the first frame update
@@ -96,6 +105,7 @@ public class Player : MonoBehaviour
         _cameraShake = GameObject.Find("Main Camera").GetComponent<CameraShake>();
         _maximumAmmoCount = _ammoCount;
         _shieldColor = _shieldVisualizer.GetComponent<SpriteRenderer>();
+        _activeMoveSpeed = _speed;
 
         
 
@@ -150,7 +160,29 @@ public class Player : MonoBehaviour
             _isPlayerHomingLaserActive = false;
         }
 
-        
+        if(_dashCounter > 0)
+        {
+            _dashCounter -= Time.deltaTime;
+            if(_dashCounter <= 0)
+            {
+                _activeMoveSpeed = _speed;
+                _dashCoolCounter = _dashCooldown;
+            }
+        }
+
+        if(_dashCoolCounter >0)
+        {
+            _dashCoolCounter -= Time.deltaTime;
+        }
+
+        if(invincCount > 0)
+        {
+            invincCount -= Time.deltaTime;
+            if(invincCount <=0)
+            {
+                bodySR.color = new Color(bodySR.color.r, bodySR.color.g, bodySR.color.b, 1f);
+            }
+        }
     }
     void calculateMovement()
     {
@@ -159,15 +191,15 @@ public class Player : MonoBehaviour
 
         if(_isSpeedOverloadActive == true)
         {
-            transform.Translate(new Vector3(horizontalInput, verticalInput, 0) * _speed * _speedMultiplier * Time.deltaTime);
+            transform.Translate(new Vector3(horizontalInput, verticalInput, 0) * _speed * _activeMoveSpeed * _speedMultiplier * Time.deltaTime);
         }
         else if(_isSlowSpeedActive == true)
         {
-            transform.Translate(new Vector3(horizontalInput, verticalInput, 0) * _speed * 0.2f * Time.deltaTime);
+            transform.Translate(new Vector3(horizontalInput, verticalInput, 0) * _speed * _activeMoveSpeed * 0.2f * Time.deltaTime);
         }
         else
         {
-            transform.Translate(new Vector3(horizontalInput, verticalInput, 0) * _speed * Time.deltaTime);
+            transform.Translate(new Vector3(horizontalInput, verticalInput, 0) * _speed * _activeMoveSpeed * Time.deltaTime);
         }
 
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -6.00f, 4), 0f);
@@ -258,48 +290,55 @@ public class Player : MonoBehaviour
     }
     public void Damage()
     {
-        if(_isShieldBoostActive == true)
+        if (invincCount <= 0)
         {
-            _shieldPower--;
-
-            if(_shieldPower == 0)
+            if (_isShieldBoostActive == true)
             {
-                _isShieldBoostActive = false;
-                _shieldVisualizer.SetActive(false);
-                return;
+                _shieldPower--;
+
+                if (_shieldPower == 0)
+                {
+                    _isShieldBoostActive = false;
+                    _shieldVisualizer.SetActive(false);
+                    return;
+                }
+                else if (_shieldPower == 1)
+                {
+                    _shieldColor.color = Color.red;
+                    return;
+                }
+                else if (_shieldPower == 2)
+                {
+                    _shieldColor.color = Color.green;
+                    return;
+                }
             }
-            else if (_shieldPower ==1)
+        
+            _lives--;
+
+            invincCount = damageInvicLength;
+
+            bodySR.color = new Color(bodySR.color.r, bodySR.color.g, bodySR.color.b, .3f);
+
+            if (_lives == 2)
             {
-                _shieldColor.color = Color.red;
-                return;
+                _rightEngine.SetActive(true);
             }
-            else if(_shieldPower ==2)
+            else if (_lives == 1)
             {
-                _shieldColor.color = Color.green;
-                return;
+                _leftEngine.SetActive(true);
             }
+
+            _uiManager.UpdateLives(_lives);
+
+            if (_lives < 1)
+            {
+                _spawnManager.OnPlayerDeath();
+                Destroy(this.gameObject, .28f);
+            }
+          
+            StartCoroutine(_cameraShake.Shake(0.5f, 0.32f));
         }
-
-        _lives --;
-
-        if(_lives == 2)
-        {
-            _rightEngine.SetActive(true);
-        }
-        else if(_lives == 1)
-        {
-            _leftEngine.SetActive(true);
-        }
-
-        _uiManager.UpdateLives(_lives);
-
-        if (_lives < 1)
-        {
-            _spawnManager.OnPlayerDeath();
-            Destroy(this.gameObject, .28f);
-        }
-
-        StartCoroutine(_cameraShake.Shake(0.5f, 0.32f));
     }
 
     //create method for TripleShotActive

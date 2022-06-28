@@ -169,6 +169,7 @@ MonoBehaviour:
   _speed: 4.4
   powerupID: 2
   _audioClip: {fileID: 8300000, guid: 5ee343246919d2b4bba63ae629e95494, type: 3}
+  _toPlayer: {fileID: 0}
 --- !u!114 &-5553144814749556317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,7 +177,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9025992869826386572}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 548f53f57c4e2d444952032e5f30c0f4, type: 3}
   m_Name: 
