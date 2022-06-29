@@ -72,7 +72,7 @@ public class Enemy2 : MonoBehaviour
 
         if (transform.position.y < -10f)
         {
-            float randomX = Random.Range(-5f, 15f);
+            float randomX = Random.Range(-5f, 11f);
             transform.position = new Vector3(randomX, 16, 1);
         }
         if (transform.position.x > 15.34f)
@@ -155,7 +155,6 @@ public class Enemy2 : MonoBehaviour
             }
         }
     }
-
 
     private void OnTriggerEnter2D(Collider2D other)
     {

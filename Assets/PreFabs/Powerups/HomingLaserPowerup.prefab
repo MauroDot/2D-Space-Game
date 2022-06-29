@@ -86,7 +86,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 3.8
   powerupID: 6
-  _audioClip: {fileID: 8300000, guid: 5ee343246919d2b4bba63ae629e95494, type: 3}
+  _audioClip: {fileID: 8300000, guid: 01e1a9d0034baf645a82518d8dda921d, type: 3}
   _toPlayer: {fileID: 0}
 --- !u!114 &213003051
 MonoBehaviour:

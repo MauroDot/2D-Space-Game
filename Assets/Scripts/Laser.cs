@@ -6,7 +6,7 @@ public class Laser : MonoBehaviour
 {
     //Speed variable of 8
     [SerializeField]
-    private float _speed = 8.0f;
+    private float _speed = 18.0f;
     private bool _isEnemyLaser = false;
     
     

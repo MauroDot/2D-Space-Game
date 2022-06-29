@@ -20,6 +20,8 @@ public class UIManager : MonoBehaviour
     private Text _ammoText;
     [SerializeField]
     private Text _homingLaserCountText;
+    [SerializeField]
+    private Text levelEndScreen;
 
     private GameManager _gameManager;
     //private SpawnManager _spawnManager;
