@@ -29,10 +29,9 @@ public class Enemy : MonoBehaviour
     private int _enemyID;
 
     [SerializeField]
-    private GameObject _shieldVisualizer;
+    private GameObject _shield;
     [SerializeField]
-    private bool _isShieldActive = false;
-
+    private bool _isShielOn;
 
     // Start is called before the first frame update
     void Start()
@@ -45,16 +44,30 @@ public class Enemy : MonoBehaviour
         _enemyID = Random.Range(0, 2);
         _detectRange = 6f;
 
-        if (_player == null)
-        {
-            Debug.LogError("Player is NUll!");
-        }
+        
 
         _anim = GetComponent<Animator>();
 
         if(_anim == null)
         {
             Debug.LogError("Animator is NULL!");
+        }
+
+        int X = Random.Range(0, 100);
+
+        if (X >= 70)
+        {
+            _isShielOn = true;
+        }
+        else
+        {
+            _isShielOn = false;
+        }
+        _shield.SetActive(_isShielOn);
+
+        if (_player == null)
+        {
+            Debug.LogError("Player is NUll!");
         }
     }
     // Update is called once per frame
@@ -115,19 +128,6 @@ public class Enemy : MonoBehaviour
             GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
             Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
 
-            int probability = Random.Range(1, 101);
-            Debug.Log(probability);
-            if (probability > 80)
-            {
-                _isShieldActive = true;
-                _shieldVisualizer.SetActive(true);
-            }
-            else
-            {
-                _isShieldActive = false;
-                _shieldVisualizer.SetActive(false);
-            }
-
             for (int i = 0; i < lasers.Length; i++)
             {
                 lasers[i].AssignEnemyLaser();
@@ -151,7 +151,7 @@ public class Enemy : MonoBehaviour
     {
         Player player = other.transform.GetComponent<Player>();
 
-        if(player != null)
+        if (player != null)
         {
             player.Damage();
         }
@@ -169,10 +169,13 @@ public class Enemy : MonoBehaviour
 
     void Damage()
     {
-        if(_isShieldActive == true)
+        
+
+        if (_isShielOn == true && _shield.activeInHierarchy == true)
         {
-            _isShieldActive = false;
-            _shieldVisualizer.SetActive(false);
+            _isShielOn = false;
+            _shield.SetActive(false);
+            return;
         }
         else
         {

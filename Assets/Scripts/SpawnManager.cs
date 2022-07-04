@@ -12,21 +12,42 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private bool _stopSpawning = false;
     [SerializeField]
-    private GameObject [] powerUps; //array braket to make a fixed list for all powerups
+    private GameObject[] powerUps; //array braket to make a fixed list for all powerups
 
     private int _waveNumber;
     private int _enemiesDead;
     private int _maxEnemies;
     private int _enemiesLeftToSpawn;
-    float _timeToLoadScene;
-    
+
 
     private UIManager _uiManager;
 
     public void Start()
     {
         _uiManager = GameObject.FindObjectOfType<UIManager>();
+
+        foreach (GameObject obj in _common)
+        {
+            Debug.Log(obj);
+        }
+
+
+        foreach (GameObject obj in _uncommon)
+        {
+            Debug.Log(obj);
+        }
+
+
+        foreach (GameObject obj in _rarity)
+        {
+            Debug.Log(obj);
+        }
+
     }
+
+    [SerializeField] private List<GameObject> _common = new List<GameObject>();
+    [SerializeField] private List<GameObject> _uncommon = new List<GameObject>();
+    [SerializeField] private List<GameObject> _rarity = new List<GameObject>();
     public void StartSpawning(int waveNumber)
     {
         if(waveNumber <= 5)
@@ -56,7 +77,7 @@ public class SpawnManager : MonoBehaviour
             GameObject newEnemy = Instantiate(_enemyPrefab,  posToSpawn, Quaternion.identity);
             newEnemy = Instantiate(_enemy2Prefab, posToSpawn, Quaternion.identity);
             newEnemy = Instantiate(_enemy3Prefab, posToSpawn, Quaternion.identity);
-            //_enemyPrefab.IsShieldActive();
+            
             newEnemy.transform.parent = _enemyContainer.transform;
 
             _enemiesLeftToSpawn--;
@@ -77,6 +98,8 @@ public class SpawnManager : MonoBehaviour
         {
             Vector3 postToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
             int randomPowerup = Random.Range(0, 9);
+            List<GameObject> _currentRare = GetRare();
+            GameObject _randomPowerup = _currentRare[Random.Range(0, _currentRare.Count)];
             Instantiate(powerUps[randomPowerup], postToSpawn, Quaternion.identity);
             yield return new WaitForSeconds(Random.Range(3f, 5f));
         }
@@ -87,9 +110,37 @@ public class SpawnManager : MonoBehaviour
         _enemiesDead++;
     }
 
+    
     public void OnPlayerDeath()
     {
         _stopSpawning = true;
+    }
+
+    private int _rarityCount;
+    private int _uncommonCount;
+    private int _commonCount;
+    // powerup spawn balancing common, uncommon, rarity
+    private List<GameObject> GetRare()
+    {
+        int _currentRare = Random.Range(0, 100);
+        if(_currentRare > 0 && _currentRare <= 10)
+        {
+            _rarityCount++;
+            Debug.Log("Rarity = " + _rarityCount);
+            return _rarity;
+        }
+        else if(_currentRare > 10 && _currentRare <= 50)
+        {
+            _uncommonCount++;
+            Debug.Log("Uncommon = " + _uncommonCount);
+            return _uncommon;
+        }
+        else
+        {
+           _commonCount++;
+            Debug.Log("Common = " + _commonCount);
+            return _common;
+        }
     }
 
 }

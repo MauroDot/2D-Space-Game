@@ -3115,6 +3115,18 @@ MonoBehaviour:
   - {fileID: 5807069072764573194, guid: e15f14a83045a8f47bfdda4f8b65e424, type: 3}
   - {fileID: 1360165704848183691, guid: 0ccb4c9c163deca4cb7e36b7c4a78194, type: 3}
   - {fileID: 7896704064505917723, guid: 7d3c01796a9c1d54092097707a681173, type: 3}
+  _common:
+  - {fileID: 491303480982085018, guid: 921527ac714370a41bf8c0558a96f434, type: 3}
+  - {fileID: 991446665109780902, guid: 417a0d2132b0b1e41b9106af0c441014, type: 3}
+  - {fileID: 8850735995979545577, guid: 1cc39d0e3f3730e4892a54f76d7029ba, type: 3}
+  - {fileID: 1360165704848183691, guid: 0ccb4c9c163deca4cb7e36b7c4a78194, type: 3}
+  _uncommon:
+  - {fileID: 9025992869826386572, guid: 289d4965cea304d41a0eaf9f8397b0e6, type: 3}
+  - {fileID: 2495491137144587393, guid: 8e24882af01fbf5409b712f9d80acd59, type: 3}
+  - {fileID: 7896704064505917723, guid: 7d3c01796a9c1d54092097707a681173, type: 3}
+  _rarity:
+  - {fileID: 5807069072764573194, guid: e15f14a83045a8f47bfdda4f8b65e424, type: 3}
+  - {fileID: 7894915348037232586, guid: 454531c3edff3a94186a74959254f928, type: 3}
 --- !u!4 &1698583919
 Transform:
   m_ObjectHideFlags: 0
@@ -3748,6 +3760,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 636707695440043354, guid: f6aa630598c378f44a8bc45bd498e545, type: 3}
+      propertyPath: _rotateSpeed
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 636707696795421549, guid: f6aa630598c378f44a8bc45bd498e545, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2698341573252862848, guid: f6aa630598c378f44a8bc45bd498e545, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -3805,6 +3825,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1556702811218542756, guid: 0721fb62b70b2304c89dbbfaec55f6cd, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1556702811218589956, guid: 0721fb62b70b2304c89dbbfaec55f6cd, type: 3}
+      propertyPath: RotationModule.x.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1556702811218589956, guid: 0721fb62b70b2304c89dbbfaec55f6cd, type: 3}
+      propertyPath: RotationModule.y.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1556702812217084032, guid: 0721fb62b70b2304c89dbbfaec55f6cd, type: 3}
       propertyPath: _spawnManager
       value: 

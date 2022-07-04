@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private bool _isGameOver;
 
+
     private void Update()
     {
         //if the R key was press restart the currect scene
@@ -27,5 +28,6 @@ public class GameManager : MonoBehaviour
         Debug.Log("GameManager::GameOver() Called");
         _isGameOver = true;
     }
+
 
 }

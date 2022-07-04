@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Powerup : MonoBehaviour
 {
+
     [SerializeField]
     private float _speed = 5.0f;
    
@@ -15,6 +16,11 @@ public class Powerup : MonoBehaviour
     [SerializeField]
     private GameObject _toPlayer;
     private Vector3 _toPlayerDirection;
+
+    //rare system
+    [Header("0 = Common, 1 = Uncommon, 2 = Rare")]
+    [SerializeField]
+    private int _rare;
     void Start()
     {
         if(GameObject.Find("Player") !=null)
@@ -73,6 +79,13 @@ public class Powerup : MonoBehaviour
         }
     }
 
+    //rare system
+    public int GetRare()
+    {
+        return _rare;
+    }
+
+
    
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -119,6 +132,15 @@ public class Powerup : MonoBehaviour
                 }
             }
             Destroy(this.gameObject);
+        }
+        else
+        {
+            other.gameObject.TryGetComponent<Laser>(out Laser _laser);
+
+            if(_laser !=null)
+            {
+                Destroy(this.gameObject);
+            }
         }
     }
 }
