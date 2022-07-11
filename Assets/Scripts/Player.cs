@@ -92,6 +92,11 @@ public class Player : MonoBehaviour
     public SpriteRenderer bodySR;
     //private Animation anim;
     //private Animator _animator;
+    public static Player instance;
+    private void Awake()
+    {
+        instance = this;
+    }
 
     // Start is called before the first frame update
     void Start()

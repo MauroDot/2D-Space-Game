@@ -962,9 +962,29 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1556702812217084034}
     m_Modifications:
+    - target: {fileID: 100000, guid: 2fdab942587233e42ad5de42efdc56af, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 2fdab942587233e42ad5de42efdc56af, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 2fdab942587233e42ad5de42efdc56af, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 100006, guid: 2fdab942587233e42ad5de42efdc56af, type: 3}
       propertyPath: m_Name
       value: GreemPlame
+      objectReference: {fileID: 0}
+    - target: {fileID: 100006, guid: 2fdab942587233e42ad5de42efdc56af, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100008, guid: 2fdab942587233e42ad5de42efdc56af, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: 2fdab942587233e42ad5de42efdc56af, type: 3}
       propertyPath: m_RootOrder
@@ -1009,6 +1029,14 @@ PrefabInstance:
     - target: {fileID: 400006, guid: 2fdab942587233e42ad5de42efdc56af, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800002, guid: 2fdab942587233e42ad5de42efdc56af, type: 3}
+      propertyPath: RotationModule.x.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800002, guid: 2fdab942587233e42ad5de42efdc56af, type: 3}
+      propertyPath: RotationModule.y.minMaxState
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2fdab942587233e42ad5de42efdc56af, type: 3}

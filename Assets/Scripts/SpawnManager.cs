@@ -38,16 +38,21 @@ public class SpawnManager : MonoBehaviour
         }
 
 
-        foreach (GameObject obj in _rarity)
+        foreach (GameObject obj in _rare)
         {
             Debug.Log(obj);
         }
-
     }
-
+    
+    //powerups spawn balance
     [SerializeField] private List<GameObject> _common = new List<GameObject>();
     [SerializeField] private List<GameObject> _uncommon = new List<GameObject>();
-    [SerializeField] private List<GameObject> _rarity = new List<GameObject>();
+    [SerializeField] private List<GameObject> _rare = new List<GameObject>();
+
+    //enemies spawn balance
+    [SerializeField] private List<GameObject> _commonEnemy = new List<GameObject>();
+    [SerializeField] private List<GameObject> _uncommonEnemy = new List<GameObject>();
+    [SerializeField] private List<GameObject> _rareEnemy = new List<GameObject>();
     public void StartSpawning(int waveNumber)
     {
         if(waveNumber <= 5)
@@ -56,8 +61,8 @@ public class SpawnManager : MonoBehaviour
             _enemiesDead = 0;
             _waveNumber = waveNumber;
             _uiManager.DisplayWaveNumber(_waveNumber);
-            _enemiesLeftToSpawn = _waveNumber + 50;
-            _maxEnemies = _waveNumber + 50;
+            _enemiesLeftToSpawn = _waveNumber + 20;
+            _maxEnemies = _waveNumber + 20;
             StartCoroutine(SpawnEnemyRoutine()); 
             StartCoroutine(SpawnPowerupRoutine());
         }
@@ -70,13 +75,14 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator SpawnEnemyRoutine()
     {
-        yield return new WaitForSeconds(2.8f);
+        yield return new WaitForSeconds(1.8f);
         while (_stopSpawning == false && _enemiesDead <= _maxEnemies)
         {
             Vector3 posToSpawn = new Vector3(Random.Range(-11f, 11f), 8, 0);
-            GameObject newEnemy = Instantiate(_enemyPrefab,  posToSpawn, Quaternion.identity);
-            newEnemy = Instantiate(_enemy2Prefab, posToSpawn, Quaternion.identity);
-            newEnemy = Instantiate(_enemy3Prefab, posToSpawn, Quaternion.identity);
+            List<GameObject> EnemyList = GetEnemy();
+            GameObject RandomEnemy = EnemyList[Random.Range(0, EnemyList.Count)];
+            GameObject newEnemy = Instantiate(RandomEnemy, posToSpawn, Quaternion.identity);
+            
             
             newEnemy.transform.parent = _enemyContainer.transform;
 
@@ -93,14 +99,13 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator SpawnPowerupRoutine()
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(4f);
         while (_stopSpawning == false)
         {
             Vector3 postToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
-            int randomPowerup = Random.Range(0, 9);
-            List<GameObject> _currentRare = GetRare();
+            List<GameObject> _currentRare = GetPowerup();
             GameObject _randomPowerup = _currentRare[Random.Range(0, _currentRare.Count)];
-            Instantiate(powerUps[randomPowerup], postToSpawn, Quaternion.identity);
+            Instantiate(_randomPowerup, postToSpawn, Quaternion.identity);
             yield return new WaitForSeconds(Random.Range(3f, 5f));
         }
     }
@@ -120,16 +125,16 @@ public class SpawnManager : MonoBehaviour
     private int _uncommonCount;
     private int _commonCount;
     // powerup spawn balancing common, uncommon, rarity
-    private List<GameObject> GetRare()
+    private List<GameObject> GetPowerup()
     {
-        int _currentRare = Random.Range(0, 100);
-        if(_currentRare > 0 && _currentRare <= 10)
+        int _currentType = Random.Range(0, 100);
+        if(_currentType > 0 && _currentType <= 10)
         {
             _rarityCount++;
             Debug.Log("Rarity = " + _rarityCount);
-            return _rarity;
+            return _rare;
         }
-        else if(_currentRare > 10 && _currentRare <= 50)
+        else if(_currentType > 10 && _currentType <= 50)
         {
             _uncommonCount++;
             Debug.Log("Uncommon = " + _uncommonCount);
@@ -143,4 +148,30 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
+    private int _rareEnemyCount;
+    private int _uncommonEnemyCount;
+    private int _commonEnemyCount;
+
+    private List<GameObject> GetEnemy()
+    {
+        int _currentType = Random.Range(0, 100);
+        if (_currentType > 0 && _currentType <= 10)
+        {
+            _rareEnemyCount++;
+            Debug.Log("Rare Enemy = " + _rareEnemyCount);
+            return _rareEnemy;
+        }
+        else if (_currentType > 10 && _currentType <= 50)
+        {
+            _uncommonEnemyCount++;
+            Debug.Log("Uncommon Enemy = " + _uncommonEnemyCount);
+            return _uncommonEnemy;
+        }
+        else
+        {
+            _commonEnemyCount++;
+            Debug.Log("Common Enemy = " + _commonEnemyCount);
+            return _commonEnemy;
+        }
+    }
 }

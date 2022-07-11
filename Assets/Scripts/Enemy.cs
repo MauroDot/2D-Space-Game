@@ -31,7 +31,7 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private GameObject _shield;
     [SerializeField]
-    private bool _isShielOn;
+    private bool _isShieldOn;
 
     // Start is called before the first frame update
     void Start()
@@ -57,13 +57,13 @@ public class Enemy : MonoBehaviour
 
         if (X >= 70)
         {
-            _isShielOn = true;
+            _isShieldOn = true;
         }
         else
         {
-            _isShielOn = false;
+            _isShieldOn = false;
         }
-        _shield.SetActive(_isShielOn);
+        _shield.SetActive(_isShieldOn);
 
         if (_player == null)
         {
@@ -149,18 +149,18 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Player player = other.transform.GetComponent<Player>();
-
-        if (player != null)
-        {
-            player.Damage();
-        }
         if(other.tag == "Player")
         {
+            Player player = other.transform.GetComponent<Player>();
+
+            if (player != null)
+            {
+                player.Damage();
+            }
             Damage();
         }
 
-        if(other.tag == "Laser")
+        if (other.tag == "Laser")
         {
             Destroy(other.gameObject);
             Damage();
@@ -169,13 +169,10 @@ public class Enemy : MonoBehaviour
 
     void Damage()
     {
-        
-
-        if (_isShielOn == true && _shield.activeInHierarchy == true)
+        if (_isShieldOn == true)
         {
-            _isShielOn = false;
+            _isShieldOn = false;
             _shield.SetActive(false);
-            return;
         }
         else
         {
@@ -185,11 +182,53 @@ public class Enemy : MonoBehaviour
             GetComponent<Collider2D>().enabled = false;
             _audioSource.Play();
             _spawnManager.EnemyDead();
+            if (_player != null)
+            {
+                _player.AddScore(1);
+            }
             Destroy(this.gameObject, .8f);
         }
-        if (_player != null)
+    }
+
+    public void Dodge()
+    {
+        int rng = Random.Range(0, 2);
+
+        if (rng == 0)
         {
-            _player.AddScore(1);
+            StartCoroutine(MoveLeft());
+        }
+        else
+        {
+            StartCoroutine(MoveRight());
+        }
+    }
+
+    IEnumerator MoveLeft()
+    {
+        Vector2 _currentPos = transform.position;
+        Vector2 _destination = new Vector2(transform.position.x - 2, transform.position.y);
+        float _t = 0f;
+
+        while(_t <1)
+        {
+            _t += Time.deltaTime * 3f;
+            transform.position = Vector2.Lerp(_currentPos, _destination, _t);
+            yield return null;
+        }
+    }
+
+    IEnumerator MoveRight()
+    {
+        Vector2 _currentPos = transform.position;
+        Vector2 _destination = new Vector2(transform.position.x + 2, transform.position.y);
+        float _t = 0f;
+
+        while (_t <1)
+        {
+            _t += Time.deltaTime * 3f;
+            transform.position = Vector2.Lerp(_currentPos, _destination, _t);
+            yield return null;
         }
     }
 }

@@ -4,190 +4,77 @@ using UnityEngine;
 
 public class Boss : MonoBehaviour
 {
-    [SerializeField]
-    private float _speed = 5f;
-    [SerializeField]
-    private GameObject _laserPrefab;
+    public static Boss instance;
 
-    private Player _player;
-    private Animator _anim;
+    public BossAction[] actions;
+    public int currentAction;
+    private float actionCounter;
+    private float shotCounter;
+    private Vector2 moveDirection;
+    public Rigidbody2D theRB;
 
-    private AudioSource _audioSource;
-    [SerializeField]
-    private float _fireRate = 10.0f;
-    [SerializeField]
-    private float canFire = -1;
+    private void Awake()
+    {
+        instance = this;
+    }
 
-    private SpawnManager _spawnManager;
-    [SerializeField]
-    private int _moveID;
-    [SerializeField]
-    private float _detectRange = 6f;
-    [SerializeField]
-    private int _ramSpeed = 5;
-    [SerializeField]
-    private int _enemyID;
-
-    [SerializeField]
-    private GameObject _shieldVisualizer;
-    [SerializeField]
-    private bool _isShieldActive = false;
-
-
-    // Start is called before the first frame update
     void Start()
     {
-        _fireRate = 10.0f;
-        _player = GameObject.Find("Player").GetComponent<Player>();
-        _audioSource = GetComponent<AudioSource>();
-        _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
-        _moveID = Random.Range(1, 3);
-        _enemyID = Random.Range(0, 2);
-        _detectRange = 6f;
-
-        if (_player == null)
-        {
-            Debug.LogError("Player is NUll!");
-        }
-
-        _anim = GetComponent<Animator>();
-
-        if (_anim == null)
-        {
-            Debug.LogError("Animator is NULL!");
-        }
+        actionCounter = actions[currentAction].actionLength;
     }
-    // Update is called once per frame
+
     void Update()
     {
-        CalculateMovement();
-        EnemyID();
-    }
-
-    void CalculateMovement()
-    {
-        transform.Translate(Vector3.left * _speed * Time.deltaTime);
-
-        if (transform.position.y < -10f)
+        if(actionCounter > 0)
         {
-            float randomX = Random.Range(-2f, 11f);
-            transform.position = new Vector3(randomX, 10, 1);
-        }
-    }
+            actionCounter-= Time.deltaTime;
 
-    void EnemyID()
-    {
-        switch (_enemyID)
-        {
-            case 0:
-                BaseEnemy();
-                break;
-            case 1:
-                RamEnemy();
-                break;
-            default:
-                Debug.Log("Default Value");
-                break;
-        }
-    }
+            moveDirection = Vector2.zero;
 
-    void BaseEnemy()
-    {
-        switch (_moveID)
-        {
-            case 1:
-                transform.Translate((Vector3.down + Vector3.left) * Time.deltaTime);
-                break;
-            case 2:
-                transform.Translate((Vector3.down + Vector3.right) * Time.deltaTime);
-                break;
-            case 3:
-                transform.Translate(Vector3.down * Time.deltaTime);
-                break;
-            default:
-                break;
-        }
-
-        if (Time.time > canFire)
-        {
-            _fireRate = Random.Range(4f, 6f);
-            canFire = Time.time + _fireRate;
-            GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
-            Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
-
-            int probability = Random.Range(1, 101);
-            Debug.Log(probability);
-            if (probability > 80)
+            if(actions[currentAction].shouldMove)
             {
-                _isShieldActive = true;
-                _shieldVisualizer.SetActive(true);
-            }
-            else
-            {
-                _isShieldActive = false;
-                _shieldVisualizer.SetActive(false);
+                if(actions[currentAction].shouldChasePlayer)
+                {
+                    moveDirection = Player.instance.transform.position - transform.position;
+                    moveDirection.Normalize();
+                }
+
+                if(actions[currentAction].moveToPoints)
+                {
+                    moveDirection = actions[currentAction].pointToMoveTo.position - transform.position;
+                }
             }
 
-            for (int i = 0; i < lasers.Length; i++)
-            {
-                lasers[i].AssignEnemyLaser();
-            }
-        }
-    }
-
-    void RamEnemy()
-    {
-        if (_player != null)
-        {
-            if (Vector3.Distance(_player.transform.position, transform.position) < _detectRange)
-            {
-                transform.position = Vector3.MoveTowards(transform.position, _player.transform.position, _ramSpeed * Time.deltaTime);
-            }
-        }
-    }
-
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        Player player = other.transform.GetComponent<Player>();
-
-        if (player != null)
-        {
-            player.Damage();
-        }
-        if (other.tag == "Player")
-        {
-            Damage();
-        }
-
-        if (other.tag == "Laser")
-        {
-            Destroy(other.gameObject);
-            Damage();
-        }
-    }
-
-    void Damage()
-    {
-        if (_isShieldActive == true)
-        {
-            _isShieldActive = false;
-            _shieldVisualizer.SetActive(false);
+            theRB.velocity = moveDirection * actions[currentAction].moveSpeed;
         }
         else
         {
-            _anim.SetTrigger("EnemyExplode");
-            _speed = 0;
-            _ramSpeed = 0;
-            GetComponent<Collider2D>().enabled = false;
-            _audioSource.Play();
-            _spawnManager.EnemyDead();
-            Destroy(this.gameObject, .8f);
-        }
-        if (_player != null)
-        {
-            _player.AddScore(1);
+            currentAction++;
+            if(currentAction >= actions.Length)
+            {
+                currentAction = 0;
+            }
+
+            actionCounter = actions[currentAction].actionLength;
         }
     }
+}
+
+[System.Serializable]
+public class BossAction
+{
+    [Header("Action")]
+    public float actionLength;
+
+    public bool shouldMove;
+    public bool shouldChasePlayer;
+    public float moveSpeed;
+    public bool moveToPoints;
+    public Transform pointToMoveTo;
+
+    public bool shouldShoot;
+    public GameObject itemToShoot;
+    public float timeBetweenShots;
+    public Transform[] shotPoints;
 }
 

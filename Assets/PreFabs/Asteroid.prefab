@@ -136,7 +136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bad646a0552dae345aee23f9110d7dcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotateSpeed: 5
+  _rotateSpeed: 25
   _explosionPrefab: {fileID: 5200542612402357586, guid: b9b0b0e13bc2d354b9779244f7c58ac6, type: 3}
 --- !u!82 &1574534885
 AudioSource:
@@ -241,9 +241,29 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2698341573252862848}
     m_Modifications:
+    - target: {fileID: 100000, guid: 5372b37f496b28548942cf8e99afeb2e, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 5372b37f496b28548942cf8e99afeb2e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 5372b37f496b28548942cf8e99afeb2e, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100006, guid: 5372b37f496b28548942cf8e99afeb2e, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 100008, guid: 5372b37f496b28548942cf8e99afeb2e, type: 3}
       propertyPath: m_Name
       value: Hole
+      objectReference: {fileID: 0}
+    - target: {fileID: 100008, guid: 5372b37f496b28548942cf8e99afeb2e, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: 5372b37f496b28548942cf8e99afeb2e, type: 3}
       propertyPath: m_RootOrder

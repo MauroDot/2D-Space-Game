@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class Detect : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        if (collision.tag == "Laser")
+        {
+            transform.GetComponentInParent<Enemy>().Dodge();
+            StartCoroutine(DetectCooldown());
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator DetectCooldown()
     {
-        
+        transform.gameObject.SetActive(false);
+        yield return new WaitForSeconds(1);
+        transform.gameObject.SetActive(true);
     }
 }
