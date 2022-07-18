@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1040895820511230}
   - component: {fileID: 1040895820511231}
   - component: {fileID: 213003051}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: HomingLaserPowerup
   m_TagString: Powerup
   m_Icon: {fileID: 0}
@@ -88,6 +88,7 @@ MonoBehaviour:
   powerupID: 6
   _audioClip: {fileID: 8300000, guid: 01e1a9d0034baf645a82518d8dda921d, type: 3}
   _toPlayer: {fileID: 0}
+  _rare: 2
 --- !u!114 &213003051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108,9 +109,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5808399087395288780}
     m_Modifications:
+    - target: {fileID: 1149435942927604, guid: f7b64fa8e6b3c1046a62b945b6cc7c85, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1160677288998308, guid: f7b64fa8e6b3c1046a62b945b6cc7c85, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1653222931593806, guid: f7b64fa8e6b3c1046a62b945b6cc7c85, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 1905951782066052, guid: f7b64fa8e6b3c1046a62b945b6cc7c85, type: 3}
       propertyPath: m_Name
       value: Ring_SPQR1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1905951782066052, guid: f7b64fa8e6b3c1046a62b945b6cc7c85, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4064081977714468, guid: f7b64fa8e6b3c1046a62b945b6cc7c85, type: 3}
       propertyPath: m_LocalScale.x

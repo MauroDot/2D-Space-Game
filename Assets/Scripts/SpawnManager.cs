@@ -68,7 +68,7 @@ public class SpawnManager : MonoBehaviour
         }
         else if(waveNumber >= 5)
         {
-            SceneManager.LoadScene(2);
+            
         }
         //else start boss battle
     }

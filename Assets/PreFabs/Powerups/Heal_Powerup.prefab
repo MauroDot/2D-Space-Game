@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2259492617757850680}
   - component: {fileID: 4889955167122478288}
   - component: {fileID: 2127011144701430215}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Heal_Powerup
   m_TagString: Powerup
   m_Icon: {fileID: 0}
@@ -94,10 +94,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b3fa3a0180d6124698885c867b5e940, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 4.5
+  _speed: 3.5
   powerupID: 4
   _audioClip: {fileID: 8300000, guid: 01e1a9d0034baf645a82518d8dda921d, type: 3}
   _toPlayer: {fileID: 0}
+  _rare: 2
 --- !u!114 &2127011144701430215
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,6 +122,18 @@ PrefabInstance:
     - target: {fileID: 1036645521399630, guid: c34ba9676e055cc44a16d849c58420b9, type: 3}
       propertyPath: m_Name
       value: Ring_Fixing
+      objectReference: {fileID: 0}
+    - target: {fileID: 1036645521399630, guid: c34ba9676e055cc44a16d849c58420b9, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1437218135383542, guid: c34ba9676e055cc44a16d849c58420b9, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1709532489087032, guid: c34ba9676e055cc44a16d849c58420b9, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4765277879302052, guid: c34ba9676e055cc44a16d849c58420b9, type: 3}
       propertyPath: m_RootOrder
@@ -199,6 +212,10 @@ PrefabInstance:
     - target: {fileID: 1774903938695936, guid: feff0fcb881cbef4888b6fa43a0bbd86, type: 3}
       propertyPath: m_Name
       value: RingEffect_White
+      objectReference: {fileID: 0}
+    - target: {fileID: 1774903938695936, guid: feff0fcb881cbef4888b6fa43a0bbd86, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4090208851956320, guid: feff0fcb881cbef4888b6fa43a0bbd86, type: 3}
       propertyPath: m_RootOrder

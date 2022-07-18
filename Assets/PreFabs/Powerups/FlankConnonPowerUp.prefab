@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1361596061560327762}
   - component: {fileID: 1361596061560327788}
   - component: {fileID: 1361596061560327789}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FlankConnonPowerUp
   m_TagString: Powerup
   m_Icon: {fileID: 0}
@@ -101,6 +101,7 @@ MonoBehaviour:
   powerupID: 7
   _audioClip: {fileID: 8300000, guid: 01e1a9d0034baf645a82518d8dda921d, type: 3}
   _toPlayer: {fileID: 0}
+  _rare: 0
 --- !u!1001 &1012764414
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -111,6 +112,18 @@ PrefabInstance:
     - target: {fileID: 1043287020319320, guid: 994bd93521f1e2d46832bbfab89c8fc3, type: 3}
       propertyPath: m_Name
       value: SPQR2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1043287020319320, guid: 994bd93521f1e2d46832bbfab89c8fc3, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1355827277097910, guid: 994bd93521f1e2d46832bbfab89c8fc3, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1723767621269320, guid: 994bd93521f1e2d46832bbfab89c8fc3, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4412486454535552, guid: 994bd93521f1e2d46832bbfab89c8fc3, type: 3}
       propertyPath: m_LocalScale.x

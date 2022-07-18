@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1871893475}
   - component: {fileID: 1871893476}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: bullets
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62,7 +62,7 @@ GameObject:
   - component: {fileID: 491303480982085023}
   - component: {fileID: 491303480407622242}
   - component: {fileID: 7970765201131797858}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TripleshotPowerup
   m_TagString: Powerup
   m_Icon: {fileID: 0}
@@ -198,6 +198,7 @@ MonoBehaviour:
   powerupID: 0
   _audioClip: {fileID: 8300000, guid: 01e1a9d0034baf645a82518d8dda921d, type: 3}
   _toPlayer: {fileID: 0}
+  _rare: 0
 --- !u!95 &491303480407622242
 Animator:
   serializedVersion: 3
@@ -240,6 +241,10 @@ PrefabInstance:
     - target: {fileID: 1317516174356360, guid: 7ca100047bf1efb4d85f0a256ea50edd, type: 3}
       propertyPath: m_Name
       value: Bullet (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1317516174356360, guid: 7ca100047bf1efb4d85f0a256ea50edd, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4713767061362108, guid: 7ca100047bf1efb4d85f0a256ea50edd, type: 3}
       propertyPath: m_RootOrder
@@ -315,6 +320,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bullet (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1317516174356360, guid: 7ca100047bf1efb4d85f0a256ea50edd, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4713767061362108, guid: 7ca100047bf1efb4d85f0a256ea50edd, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -388,6 +397,10 @@ PrefabInstance:
     - target: {fileID: 1317516174356360, guid: 7ca100047bf1efb4d85f0a256ea50edd, type: 3}
       propertyPath: m_Name
       value: Bullet
+      objectReference: {fileID: 0}
+    - target: {fileID: 1317516174356360, guid: 7ca100047bf1efb4d85f0a256ea50edd, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4713767061362108, guid: 7ca100047bf1efb4d85f0a256ea50edd, type: 3}
       propertyPath: m_RootOrder

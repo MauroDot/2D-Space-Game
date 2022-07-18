@@ -17,7 +17,7 @@ public class Enemy : MonoBehaviour
     private float _fireRate = 10.0f;
     [SerializeField]
     private float canFire = -1;
-    
+
     private SpawnManager _spawnManager;
     [SerializeField]
     private int _moveID;
@@ -33,6 +33,12 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private bool _isShieldOn;
 
+    // shot from behind
+    [SerializeField]
+    GameObject _backFireShot;
+
+    // starting enemy can shoot from behind player
+
     // Start is called before the first frame update
     void Start()
     {
@@ -44,18 +50,16 @@ public class Enemy : MonoBehaviour
         _enemyID = Random.Range(0, 2);
         _detectRange = 6f;
 
-        
-
         _anim = GetComponent<Animator>();
 
-        if(_anim == null)
+        if (_anim == null)
         {
             Debug.LogError("Animator is NULL!");
         }
 
-        int X = Random.Range(0, 100);
+        int s = Random.Range(0, 100);
 
-        if (X >= 70)
+        if (s >= 70)
         {
             _isShieldOn = true;
         }
@@ -76,7 +80,6 @@ public class Enemy : MonoBehaviour
         CalculateMovement();
         EnemyID();
     }
-
     void CalculateMovement()
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
@@ -87,7 +90,6 @@ public class Enemy : MonoBehaviour
             transform.position = new Vector3(randomX, 10, 1);
         }
     }
-
     void EnemyID()
     {
         switch (_enemyID)
@@ -103,7 +105,6 @@ public class Enemy : MonoBehaviour
                 break;
         }
     }
-
     void BaseEnemy()
     {
         switch (_moveID)
@@ -123,18 +124,31 @@ public class Enemy : MonoBehaviour
 
         if (Time.time > canFire)
         {
-            _fireRate = Random.Range(4f, 6f);
-            canFire = Time.time + _fireRate;
-            GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
-            Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
-
-            for (int i = 0; i < lasers.Length; i++)
-            {
-                lasers[i].AssignEnemyLaser();
-            }
+            NormalFire();
         }
     }
+    public void NormalFire()
+    {
+        _fireRate = Random.Range(4f, 6f);
+        canFire = Time.time + _fireRate;
+        GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
+        Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
 
+        for (int i = 0; i < lasers.Length; i++)
+        {
+            lasers[i].AssignEnemyLaser();
+        }
+    }
+    public void BackFire()
+    {
+        GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
+        Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
+
+        for (int i = 0; i < lasers.Length; i++)
+        {
+            lasers[i].AssignBackFire();
+        }
+    }
     void RamEnemy()
     {
         if (_player != null)
@@ -146,10 +160,9 @@ public class Enemy : MonoBehaviour
         }
     }
 
-
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.tag == "Player")
+        if (other.tag == "Player")
         {
             Player player = other.transform.GetComponent<Player>();
 
@@ -160,7 +173,7 @@ public class Enemy : MonoBehaviour
             Damage();
         }
 
-        if (other.tag == "Laser")
+        if (other.tag == "Laser" && _backFireShot == true)
         {
             Destroy(other.gameObject);
             Damage();
@@ -188,8 +201,8 @@ public class Enemy : MonoBehaviour
             }
             Destroy(this.gameObject, .8f);
         }
-    }
 
+    }
     public void Dodge()
     {
         int rng = Random.Range(0, 2);
@@ -210,7 +223,7 @@ public class Enemy : MonoBehaviour
         Vector2 _destination = new Vector2(transform.position.x - 2, transform.position.y);
         float _t = 0f;
 
-        while(_t <1)
+        while (_t < 1)
         {
             _t += Time.deltaTime * 3f;
             transform.position = Vector2.Lerp(_currentPos, _destination, _t);
@@ -224,7 +237,7 @@ public class Enemy : MonoBehaviour
         Vector2 _destination = new Vector2(transform.position.x + 2, transform.position.y);
         float _t = 0f;
 
-        while (_t <1)
+        while (_t < 1)
         {
             _t += Time.deltaTime * 3f;
             transform.position = Vector2.Lerp(_currentPos, _destination, _t);

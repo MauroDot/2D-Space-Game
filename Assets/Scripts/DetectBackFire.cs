@@ -2,21 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Detect : MonoBehaviour
+public class DetectBackFire : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Laser")
+        if (collision.tag == "Player")
         {
-            transform.GetComponentInParent<Enemy>().Dodge();
+            transform.GetComponentInParent<Enemy>().BackFire();
             StartCoroutine(DetectCooldown());
         }
-        
-        if(collision.tag == "Powerup")
-        {
-            transform.GetComponentInParent<Enemy>().NormalFire();
-        }
     }
+
     IEnumerator DetectCooldown()
     {
         transform.gameObject.SetActive(false);

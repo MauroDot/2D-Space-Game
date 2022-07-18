@@ -15,7 +15,9 @@ public class Powerup : MonoBehaviour
 
     [SerializeField]
     private GameObject _toPlayer;
-    private Vector3 _toPlayerDirection;
+    private Vector3 _trackPlayer;
+
+    GameObject _explosionPrefab;
 
     //rare system
     [Header("0 = Common, 1 = Uncommon, 2 = Rare")]
@@ -63,8 +65,8 @@ public class Powerup : MonoBehaviour
                 moveVertical= -3;
             }
 
-            _toPlayerDirection = new Vector3(moveHorizontal, moveVertical, 0);
-            transform.Translate(_toPlayerDirection * (_speed - 1) * Time.deltaTime);
+            _trackPlayer = new Vector3(moveHorizontal, moveVertical, 0);
+            transform.Translate(_trackPlayer * (_speed - 1) * Time.deltaTime);
         }
         else
         {

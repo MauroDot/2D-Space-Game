@@ -8,8 +8,8 @@ public class Laser : MonoBehaviour
     [SerializeField]
     private float _speed = 18.0f;
     private bool _isEnemyLaser = false;
-    
-    
+    private bool _isMoveUp = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +19,7 @@ public class Laser : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       if(_isEnemyLaser == false)
+       if(_isMoveUp == true)
        {
             MoveUp();
        }
@@ -28,7 +28,6 @@ public class Laser : MonoBehaviour
             MoveDown();
        }
     }
-
     void MoveUp()
     {
         //Translate laser up
@@ -62,6 +61,13 @@ public class Laser : MonoBehaviour
     public void AssignEnemyLaser()
     {
         _isEnemyLaser = true;
+        _isMoveUp = false;
+    }
+
+    public void AssignBackFire()
+    {
+        _isEnemyLaser = true;
+        _isMoveUp = true;
     }
 
     private void OnTriggerEnter2D(Collider2D other)

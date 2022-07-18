@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3664827239441481426}
   - component: {fileID: 8468806670866610618}
   - component: {fileID: 9130943979553898822}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PlayerLaserAmmo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 7896202026227796062}
   - component: {fileID: 7896202026227796060}
   - component: {fileID: -1844172483925506009}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: AmmoPickup
   m_TagString: Powerup
   m_Icon: {fileID: 0}
@@ -195,6 +195,7 @@ MonoBehaviour:
   powerupID: 5
   _audioClip: {fileID: 8300000, guid: 01e1a9d0034baf645a82518d8dda921d, type: 3}
   _toPlayer: {fileID: 0}
+  _rare: 0
 --- !u!114 &-1844172483925506009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,6 +219,10 @@ PrefabInstance:
     - target: {fileID: 1493138611494054, guid: 8f7063698ce40034bb3589534a0021e9, type: 3}
       propertyPath: m_Name
       value: RingEffect_Green
+      objectReference: {fileID: 0}
+    - target: {fileID: 1493138611494054, guid: 8f7063698ce40034bb3589534a0021e9, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4675305770944518, guid: 8f7063698ce40034bb3589534a0021e9, type: 3}
       propertyPath: m_RootOrder
