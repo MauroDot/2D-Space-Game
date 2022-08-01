@@ -9,6 +9,8 @@ TagManager:
   - Powerup
   - Detector
   - Boss
+  - FreezeTouch
+  - ThePlayer
   layers:
   - Default
   - TransparentFX

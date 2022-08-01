@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class SpawnManager : MonoBehaviour
 {
     [SerializeField]
-    private GameObject _enemyPrefab, _enemy2Prefab, _enemy3Prefab;
+    private GameObject _enemyPrefab, _enemy2Prefab, _enemy3Prefab, _enemyBossPrefab;
     [SerializeField]
     private GameObject _enemyContainer;
     [SerializeField]
@@ -19,9 +19,11 @@ public class SpawnManager : MonoBehaviour
     private int _maxEnemies;
     private int _enemiesLeftToSpawn;
 
-
     private UIManager _uiManager;
+    private EnemyBoss _enemyBoss;
 
+    [SerializeField]
+    private bool _isBossEnemy = false;
     public void Start()
     {
         _uiManager = GameObject.FindObjectOfType<UIManager>();
@@ -51,11 +53,11 @@ public class SpawnManager : MonoBehaviour
 
     //enemies spawn balance
     [SerializeField] private List<GameObject> _commonEnemy = new List<GameObject>();
-    [SerializeField] private List<GameObject> _uncommonEnemy = new List<GameObject>();
     [SerializeField] private List<GameObject> _rareEnemy = new List<GameObject>();
+    [SerializeField] private List<GameObject> _uncommonEnemy = new List<GameObject>();
     public void StartSpawning(int waveNumber)
     {
-        if(waveNumber <= 5)
+        if(waveNumber <= 6)
         {
             _stopSpawning = false;
             _enemiesDead = 0;
@@ -66,11 +68,14 @@ public class SpawnManager : MonoBehaviour
             StartCoroutine(SpawnEnemyRoutine()); 
             StartCoroutine(SpawnPowerupRoutine());
         }
-        else if(waveNumber >= 5)
+        else if(waveNumber == 6 && _enemiesLeftToSpawn == 0)
         {
-            
+           
         }
-        //else start boss battle
+        else if(waveNumber > 6 && _enemiesLeftToSpawn == 0)
+        {
+            SceneManager.LoadScene(2);
+        }
     }
 
     IEnumerator SpawnEnemyRoutine()
@@ -82,7 +87,6 @@ public class SpawnManager : MonoBehaviour
             List<GameObject> EnemyList = GetEnemy();
             GameObject RandomEnemy = EnemyList[Random.Range(0, EnemyList.Count)];
             GameObject newEnemy = Instantiate(RandomEnemy, posToSpawn, Quaternion.identity);
-            
             
             newEnemy.transform.parent = _enemyContainer.transform;
 
@@ -148,9 +152,10 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    private int _rareEnemyCount;
     private int _uncommonEnemyCount;
     private int _commonEnemyCount;
+    private int _rareEnemyCount;
+   
 
     private List<GameObject> GetEnemy()
     {
@@ -158,20 +163,20 @@ public class SpawnManager : MonoBehaviour
         if (_currentType > 0 && _currentType <= 10)
         {
             _rareEnemyCount++;
-            Debug.Log("Rare Enemy = " + _rareEnemyCount);
+            Debug.Log("Boss Enemy = " + _rareEnemyCount);
             return _rareEnemy;
         }
         else if (_currentType > 10 && _currentType <= 50)
         {
-            _uncommonEnemyCount++;
-            Debug.Log("Uncommon Enemy = " + _uncommonEnemyCount);
-            return _uncommonEnemy;
-        }
-        else
-        {
             _commonEnemyCount++;
             Debug.Log("Common Enemy = " + _commonEnemyCount);
             return _commonEnemy;
+        }
+        else
+        {
+            _uncommonEnemyCount++;
+            Debug.Log("Uncommon Enemy = " + _uncommonEnemyCount);
+            return _uncommonEnemy;
         }
     }
 }

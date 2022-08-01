@@ -5324,7 +5324,7 @@ MonoBehaviour:
   _speed: 4.5
   _laserPrefab: {fileID: 4409107529824698269, guid: eacb45ca530de49439a59334f4666e71, type: 3}
   _fireRate: 10
-  canFire: -1
+  _canFire: -1
   _moveID: 0
   _detectRange: 6
   _ramSpeed: 5
@@ -5339,9 +5339,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8495752758211171736}
     m_Modifications:
+    - target: {fileID: 5611219464669672814, guid: 5d99506bab3378c408799a387979ea69, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -4.13
+      objectReference: {fileID: 0}
     - target: {fileID: 7383186908012268577, guid: 5d99506bab3378c408799a387979ea69, type: 3}
       propertyPath: m_LocalPosition.y
       value: -4.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 7383186908012268579, guid: 5d99506bab3378c408799a387979ea69, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7383186908012268579, guid: 5d99506bab3378c408799a387979ea69, type: 3}
       propertyPath: m_LocalPosition.y
@@ -5486,6 +5494,10 @@ PrefabInstance:
     - target: {fileID: 7383186908027472227, guid: 5d99506bab3378c408799a387979ea69, type: 3}
       propertyPath: InitialModule.startColor.maxColor.r
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8600827635468275521, guid: 5d99506bab3378c408799a387979ea69, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d99506bab3378c408799a387979ea69, type: 3}

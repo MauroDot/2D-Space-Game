@@ -16,7 +16,7 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private float _fireRate = 10.0f;
     [SerializeField]
-    private float canFire = -1;
+    private float _canFire = -1;
 
     private SpawnManager _spawnManager;
     [SerializeField]
@@ -122,7 +122,7 @@ public class Enemy : MonoBehaviour
                 break;
         }
 
-        if (Time.time > canFire)
+        if (Time.time > _canFire)
         {
             NormalFire();
         }
@@ -130,7 +130,7 @@ public class Enemy : MonoBehaviour
     public void NormalFire()
     {
         _fireRate = Random.Range(4f, 6f);
-        canFire = Time.time + _fireRate;
+        _canFire = Time.time + _fireRate;
         GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
         Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
 

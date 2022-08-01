@@ -187,6 +187,16 @@ public class Player : MonoBehaviour
             }
         }
     }
+    public void Freeze(){
+        _speed=1;
+        Debug.Log("ran");
+        StartCoroutine(stopFreeze());
+    }
+    private IEnumerator stopFreeze(){
+        yield return new WaitForSeconds(4);
+        _speed=5;
+        StopCoroutine(stopFreeze());
+    }
     void calculateMovement()
     {
         float horizontalInput = Input.GetAxis("Horizontal");

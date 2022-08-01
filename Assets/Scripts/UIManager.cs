@@ -22,6 +22,8 @@ public class UIManager : MonoBehaviour
     private Text _homingLaserCountText;
     [SerializeField]
     private Text levelEndScreen;
+    [SerializeField] private Image bossHealthFill;
+    [SerializeField] GameObject bossHealthInfo;
 
     private GameManager _gameManager;
     //private SpawnManager _spawnManager;
@@ -49,7 +51,12 @@ public class UIManager : MonoBehaviour
         _scoreText.text = "Score:" + playerScore.ToString();
 
     }
-
+    public void UpdateBossHealth(float currentHealth, float maxHealth){
+        bossHealthFill.fillAmount = Mathf.Clamp(currentHealth/maxHealth,0,1f);
+    }
+    public void DisplayBossHealth(bool toggle){
+        bossHealthInfo.SetActive(toggle);
+    }
     public void UpdateLives(int currentLives)
     {
         //display img sprite
