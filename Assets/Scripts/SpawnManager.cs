@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class SpawnManager : MonoBehaviour
 {
     [SerializeField]
-    private GameObject _enemyPrefab, _enemy2Prefab, _enemy3Prefab, _enemyBossPrefab;
+    private GameObject _enemyPrefab, _enemy2Prefab, _enemy3Prefab;
     [SerializeField]
     private GameObject _enemyContainer;
     [SerializeField]
@@ -20,10 +20,9 @@ public class SpawnManager : MonoBehaviour
     private int _enemiesLeftToSpawn;
 
     private UIManager _uiManager;
-    private EnemyBoss _enemyBoss;
 
-    [SerializeField]
-    private bool _isBossEnemy = false;
+    [SerializeField] GameObject portal;
+
     public void Start()
     {
         _uiManager = GameObject.FindObjectOfType<UIManager>();
@@ -57,7 +56,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private List<GameObject> _uncommonEnemy = new List<GameObject>();
     public void StartSpawning(int waveNumber)
     {
-        if(waveNumber <= 6)
+        if(waveNumber < 6)
         {
             _stopSpawning = false;
             _enemiesDead = 0;
@@ -70,11 +69,7 @@ public class SpawnManager : MonoBehaviour
         }
         else if(waveNumber == 6 && _enemiesLeftToSpawn == 0)
         {
-           
-        }
-        else if(waveNumber > 6 && _enemiesLeftToSpawn == 0)
-        {
-            SceneManager.LoadScene(2);
+            portal.SetActive(true);
         }
     }
 
@@ -83,25 +78,31 @@ public class SpawnManager : MonoBehaviour
         yield return new WaitForSeconds(1.8f);
         while (_stopSpawning == false && _enemiesDead <= _maxEnemies)
         {
-            Vector3 posToSpawn = new Vector3(Random.Range(-11f, 11f), 8, 0);
-            List<GameObject> EnemyList = GetEnemy();
-            GameObject RandomEnemy = EnemyList[Random.Range(0, EnemyList.Count)];
-            GameObject newEnemy = Instantiate(RandomEnemy, posToSpawn, Quaternion.identity);
-            
-            newEnemy.transform.parent = _enemyContainer.transform;
+            if(_enemiesLeftToSpawn > 0)
+            {
+                Vector3 posToSpawn = new Vector3(Random.Range(-11f, 11f), 8, 0);
+                List<GameObject> EnemyList = GetEnemy();
+                Debug.Log(EnemyList.Count);
+                GameObject RandomEnemy = EnemyList[Random.Range(0, EnemyList.Count)];
+                GameObject newEnemy = Instantiate(RandomEnemy, posToSpawn, Quaternion.identity);
 
-            _enemiesLeftToSpawn--;
-            if(_enemiesLeftToSpawn == 0)
+                newEnemy.transform.parent = _enemyContainer.transform;
+
+                _enemiesLeftToSpawn--;
+            }
+
+            if(_enemiesDead >= _maxEnemies)
             {
                 _stopSpawning = true;
+                _waveNumber++;
             }
-            yield return new WaitForSeconds(2.0f);
+            yield return new WaitForSeconds(1.0f);
         }
-        StartSpawning(_waveNumber + 1);
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(1f);
+        StartSpawning(_waveNumber);
     }
 
-    IEnumerator SpawnPowerupRoutine()
+    public IEnumerator SpawnPowerupRoutine()
     {
         yield return new WaitForSeconds(4f);
         while (_stopSpawning == false)
@@ -163,7 +164,7 @@ public class SpawnManager : MonoBehaviour
         if (_currentType > 0 && _currentType <= 10)
         {
             _rareEnemyCount++;
-            Debug.Log("Boss Enemy = " + _rareEnemyCount);
+            Debug.Log("Rare Enemy = " + _rareEnemyCount);
             return _rareEnemy;
         }
         else if (_currentType > 10 && _currentType <= 50)

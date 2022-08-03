@@ -31,7 +31,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _isHealPickupActive;
     [SerializeField]
-    private Vector3 LaserOffset = new Vector3(0, 1.08f, 0);
+    private Vector3 LaserOffset = new Vector3(0, 5.08f, 0);
     [SerializeField]
     private float _fireRate = 0.5f;
     [SerializeField]
@@ -216,6 +216,18 @@ public class Player : MonoBehaviour
         }
 
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -6.00f, 4), 0f);
+        /*if(horizontalInput>0){
+            transform.Rotate(Vector3.up*-10*Time.deltaTime);
+        }
+        else if(horizontalInput<0){
+            transform.Rotate(Vector3.down*-10*Time.deltaTime);
+        }
+        else if(transform.rotation.y<0){
+            transform.Rotate(Vector3.down*-100*Time.deltaTime);
+        }
+        else if(transform.rotation.y>0){
+            transform.Rotate(Vector3.up*-100*Time.deltaTime);
+        }*/
 
         if (transform.position.x > 15.34f)
         {

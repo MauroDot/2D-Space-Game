@@ -125,6 +125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 3.5
+  _impactEffect: {fileID: 0}
 --- !u!82 &3261572981460969683
 AudioSource:
   m_ObjectHideFlags: 0
@@ -366,6 +367,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 3.5
+  _impactEffect: {fileID: 0}
 --- !u!82 &7699131717182595662
 AudioSource:
   m_ObjectHideFlags: 0
@@ -510,6 +512,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 3.5
+  _impactEffect: {fileID: 5249653766672005931, guid: d0eef13f3e376044e9d654dc4768f04a, type: 3}
 --- !u!61 &2445393738111078433
 BoxCollider2D:
   m_ObjectHideFlags: 0

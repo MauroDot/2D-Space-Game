@@ -474,7 +474,7 @@ MonoBehaviour:
   _score: 0
   _laserEffectClip: {fileID: 8300000, guid: e8ae40c5528a56e42a2bec81936cf916, type: 3}
   _playerThrusterBarSlider: {fileID: 0}
-  _ammoCount: 300
+  _ammoCount: 400
   _maximumAmmoCount: 0
   _dashSpeed: 6.5
   _dashLength: 0.5

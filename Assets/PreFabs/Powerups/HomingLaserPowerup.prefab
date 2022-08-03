@@ -88,6 +88,7 @@ MonoBehaviour:
   powerupID: 6
   _audioClip: {fileID: 8300000, guid: 01e1a9d0034baf645a82518d8dda921d, type: 3}
   _toPlayer: {fileID: 0}
+  explode: {fileID: 1687996303847696734, guid: 70a1a5f27e6f3b04bbc67ac18ee68320, type: 3}
   _rare: 2
 --- !u!114 &213003051
 MonoBehaviour:

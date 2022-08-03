@@ -26,14 +26,6 @@ public class EnemyBoss : MonoBehaviour
     private float _canFire = -1;
 
     private SpawnManager _spawnManager;
-    [SerializeField]
-    private int _moveID;
-    [SerializeField]
-    private float _detectRange = 6f;
-    [SerializeField]
-    private int _ramSpeed = 5;
-    [SerializeField]
-    private int _enemyID;
 
     [SerializeField]
     private GameObject _shield;
@@ -45,10 +37,18 @@ public class EnemyBoss : MonoBehaviour
     GameObject _backFireShot;
 
     [SerializeField]
-    private int _lives = 100;
+    private int _lives = 600;
 
+    private int maxHealth;
+
+    private int shieldLives = 20;
     UIManager canvas;
+    [SerializeField] private GameObject portal;
+    [SerializeField] private AudioClip clip;
+    [SerializeField] private AudioClip explosion;
+    [SerializeField] private GameObject bossExplode;
 
+    private CameraShake _cameraShake;
     // starting enemy can shoot from behind player
 
     // Start is called before the first frame update
@@ -58,12 +58,9 @@ public class EnemyBoss : MonoBehaviour
         _player = GameObject.Find("Player").GetComponent<Player>();
         _audioSource = GetComponent<AudioSource>();
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
-        _moveID = Random.Range(1, 3);
-        _enemyID = Random.Range(0, 2);
-        _detectRange = 6f;
         canvas = GameObject.Find("Canvas").GetComponent<UIManager>();
         _anim = GetComponent<Animator>();
-
+        maxHealth = _lives;
         NormalFire();
 
         if (_anim == null)
@@ -87,6 +84,11 @@ public class EnemyBoss : MonoBehaviour
         {
             Debug.LogError("Player is NUll!");
         }
+
+        if(_spawnManager != null)
+        {
+            StartCoroutine(_spawnManager.SpawnPowerupRoutine());
+        }
     }
     // Update is called once per frame
     void Update()
@@ -100,9 +102,9 @@ public class EnemyBoss : MonoBehaviour
     }
     void CalculateMovement()
     {
-        if (transform.position == _movePoints[0].position || transform.position == _movePoints[1].position || transform.position == _movePoints[2].position)
+        if (transform.position == _movePoints[_randomMovePoint].position)
         {
-            _randomMovePoint = Random.Range(0, 3);
+            _randomMovePoint = Random.Range(0, 5);
         }
         transform.position = Vector3.MoveTowards(transform.position, _movePoints[_randomMovePoint].position, _speed * Time.deltaTime);
     }
@@ -130,7 +132,7 @@ public class EnemyBoss : MonoBehaviour
     }
     public void NormalFire()
     {
-        _fireRate = Random.Range(1f, 4f);
+        _fireRate = Random.Range(.3f, 1f);
         _canFire = Time.time + _fireRate;
     }
 
@@ -159,37 +161,48 @@ public class EnemyBoss : MonoBehaviour
     {
         if (_isShieldOn == true)
         {
-            _lives++;
-            _isShieldOn = false;
-            _shield.SetActive(false);
-
-            if (_lives < 1)
+            shieldLives--;
+            _player.AddScore(5);
+            canvas.UpdateBossShield(shieldLives, 10);
+            if (shieldLives <= 0)
             {
-                _spawnManager.OnPlayerDeath();
-                Destroy(this.gameObject, .28f);
+                _isShieldOn = false;
+                _shield.SetActive(false);
+                canvas.DisplayBossShield(false);
+                canvas.DisplayBossHealth(true);
             }
         }
         else
         {
             _lives -= 10;
-            canvas.UpdateBossHealth(_lives,100);
+            _player.AddScore(10);
+            canvas.UpdateBossHealth(_lives, maxHealth);
             if (_lives <= 0)
             {
-                _anim.SetTrigger("EnemyExplode");
+                //_anim.SetTrigger("EnemyExplode");
                 _speed = 0;
-                _ramSpeed = 0;
                 GetComponent<Collider2D>().enabled = false;
                 _audioSource.Play();
                 _spawnManager.EnemyDead();
                 if (_player != null)
                 {
-                    _player.AddScore(25);
+                    _player.AddScore(50);
                 }
+                bossExplode.SetActive(true);
+                AudioSource.PlayClipAtPoint(explosion, transform.position, 8);
                 canvas.DisplayBossHealth(false);
-                Destroy(this.gameObject, .8f);
+                StartCoroutine(bossDestoryed());
             }
         }
-
+    }
+    private IEnumerator bossDestoryed()
+    {
+        yield return new WaitForSeconds(.8f);
+        AudioSource.PlayClipAtPoint(clip, transform.position, 8);
+        bossExplode.SetActive(false);
+        portal.SetActive(true);
+        Destroy(this.gameObject);
+        StopCoroutine(bossDestoryed());
     }
 }
 

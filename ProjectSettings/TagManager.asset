@@ -11,6 +11,7 @@ TagManager:
   - Boss
   - FreezeTouch
   - ThePlayer
+  - Asteroid
   layers:
   - Default
   - TransparentFX
@@ -56,4 +57,7 @@ TagManager:
     locked: 0
   - name: ShieldVisual
     uniqueID: 926367787
+    locked: 0
+  - name: Portal
+    uniqueID: 1811758519
     locked: 0

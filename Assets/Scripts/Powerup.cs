@@ -19,6 +19,8 @@ public class Powerup : MonoBehaviour
 
     GameObject _explosionPrefab;
 
+    [SerializeField] private GameObject explode;
+
     //rare system
     [Header("0 = Common, 1 = Uncommon, 2 = Rare")]
     [SerializeField]
@@ -133,6 +135,7 @@ public class Powerup : MonoBehaviour
 
                 }
             }
+            Instantiate(explode,transform.position,Quaternion.identity);
             Destroy(this.gameObject);
         }
         else

@@ -9,6 +9,7 @@ public class Laser : MonoBehaviour
     private float _speed = 18.0f;
     private bool _isEnemyLaser = false;
     private bool _isMoveUp = true;
+    [SerializeField] GameObject _impactEffect;
 
     // Start is called before the first frame update
     void Start()
@@ -80,6 +81,9 @@ public class Laser : MonoBehaviour
             {
                 player.Damage();
             }
+        }
+        else if(other.tag!= "Player"){
+            Instantiate(_impactEffect, transform.position, transform.rotation);
         }
     }
 }

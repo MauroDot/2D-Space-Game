@@ -23,7 +23,9 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Text levelEndScreen;
     [SerializeField] private Image bossHealthFill;
+    [SerializeField] private Image bossShieldFill;
     [SerializeField] GameObject bossHealthInfo;
+    [SerializeField] GameObject bossShieldInfo;
 
     private GameManager _gameManager;
     //private SpawnManager _spawnManager;
@@ -54,8 +56,14 @@ public class UIManager : MonoBehaviour
     public void UpdateBossHealth(float currentHealth, float maxHealth){
         bossHealthFill.fillAmount = Mathf.Clamp(currentHealth/maxHealth,0,1f);
     }
+    public void UpdateBossShield(float currentShield, float maxShield){
+        bossShieldFill.fillAmount = Mathf.Clamp(currentShield/maxShield,0,1f);
+    }
     public void DisplayBossHealth(bool toggle){
         bossHealthInfo.SetActive(toggle);
+    }
+    public void DisplayBossShield(bool toggle){
+        bossShieldInfo.SetActive(toggle);
     }
     public void UpdateLives(int currentLives)
     {
@@ -110,11 +118,8 @@ public class UIManager : MonoBehaviour
 
     IEnumerator WaveDisplayRoutine()
     {
-        while(_waveDisplay == true)
-        {
-            yield return new WaitForSeconds(3f);
-            _waveDisplay.gameObject.SetActive(false);
-        }
+        yield return new WaitForSeconds(5f);
+        _waveDisplay.gameObject.SetActive(false);
     }
 
     void GameOverSequence()
